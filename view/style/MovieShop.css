@@ -5,9 +5,7 @@ h2 {
 form {
     text-align: center;
 }
-#test {
-    opacity: 0.9;
-}
+
 
 
 html, body {
@@ -24,7 +22,14 @@ nav
 {
     overflow: auto;
 }
+#newsletter {
+    color: white;
+    text-align: center;
 
+}
+.custom {
+    size: A3;
+}
 h5{
     color: black;
     text-align: center;
