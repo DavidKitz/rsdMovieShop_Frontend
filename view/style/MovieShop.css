@@ -45,3 +45,12 @@ h5{
     text-align: center;
 }
 
+.bottomProperty {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+}
+
+.toWhite {
+    color: white;
+}
