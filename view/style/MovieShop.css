@@ -35,9 +35,7 @@ nav
 label{
     color: white;
 }
-.custom {
-    size: A3;
-}
+
 h5{
     color: black;
     text-align: center;
@@ -55,12 +53,7 @@ h5{
 
 }
 
-.bottomProperty {
 
-    bottom: 0px;
-    width: 100%;
-
-}
 .margin-0 {
     margin: 0;
 }
@@ -68,4 +61,9 @@ h5{
 
 .toWhite {
     color: white;
+}
+
+.elementCenterAndItalic {
+    font-style: italic;
+    text-align: center;
 }
