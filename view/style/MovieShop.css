@@ -11,6 +11,9 @@ footer {
 html, body {
     min-height: 100%;
 }
+.addMarginBot {
+    padding-bottom: 25px;
+}
 body {
     background-image: url("background.jpg");
     background-repeat: no-repeat;
