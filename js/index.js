@@ -9,8 +9,7 @@ async function imdbApiCall() {
         const div = document.createElement("div");
         div.classList.add("custom-div")
         img.src = response["items"][i]["image"];
-        img.classList.add("img-thumbnail");
-        //img.classList.add("custom-image");
+ 
         div.append(img);
         divResponse.append(div);
         console.log(response["items"][i]);

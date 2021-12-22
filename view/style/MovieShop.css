@@ -34,7 +34,9 @@ label{
 }
 
 img:hover {
-    color: #23527c;
+    
+    -webkit-filter: brightness(60%);
+
 }
 h5{
     color: black;
