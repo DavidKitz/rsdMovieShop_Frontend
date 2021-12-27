@@ -14,10 +14,6 @@ async function imdbApiCall() {
         divResponse.append(div);
         console.log(response["items"][i]);
     }
-    
-    
-
-
-    
+  
 }
 imdbApiCall();
