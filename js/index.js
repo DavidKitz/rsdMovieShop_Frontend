@@ -1,4 +1,22 @@
+import fetchService from "./service/fetchService.js";
+
+const myFetchService = new fetchService();
 const divResponse = document.getElementById("searchResult");
+const formItem = document.getElementById("sendForm");
+
+formItem.addEventListener("submit", function(e) {
+    findMoviesFromDb(e);
+});
+
+
+async function findMoviesFromDb(e) {
+    
+    e.preventDefault();
+    const response = await myFetchService.findAllMovies("http://localhost:8080/api/movies/all");
+    
+
+}
+
 
 async function imdbApiCall() {
     let request = await fetch('https://imdb-api.com/en/API/Top250Movies/k_ei4ys9ee');
@@ -12,7 +30,7 @@ async function imdbApiCall() {
  
         div.append(img);
         divResponse.append(div);
-        console.log(response["items"][i]);
+        //console.log(response["items"][i]);
     }
   
 }

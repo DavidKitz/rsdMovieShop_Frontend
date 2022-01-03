@@ -8,15 +8,16 @@ formItem.addEventListener("submit", function(e) {
 });
 
 async function submitUser(e,form) {
+    
     e.preventDefault();
     const requestBody = buildJsonFormData(form);
     const btnSubmit = document.getElementById("btnSubmit");
     const headers = buildHeaders();
-    const response = await myFetchService.performHttpRequest("http://localhost:8080/api/user/register",headers, requestBody);
-    console.log(response);
-    //fetchService.performHttpRequest("http://localhost:8080/api/user/register", requestBody);
+    const response = await myFetchService.performHttpPostRequest("http://localhost:8080/api/register",headers, requestBody);
     
-    
+    if(response != null) {
+        window.location.href = "http://127.0.0.1:5500/view/login.html";
+    }
 }
 
 function buildJsonFormData(form) {
