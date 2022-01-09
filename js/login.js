@@ -3,18 +3,20 @@ import fetchService from "./service/fetchService.js";
 const myFetchService = new fetchService();
 const loginForm = document.getElementById("loginForm");
 
-
-let store = loginForm.addEventListener("submit", function(e) {
+loginForm.addEventListener("submit", function(e) {
     loginUser(e,this);
 });
 
 async function loginUser(e,form) {
     e.preventDefault();
-
+    const username = document.getElementById("username").value;
     const formDataInJson = buildJsonFormData(form);
     const header = buildHeaders();
     const response = await myFetchService.performHttpPostLoginRequest("http://localhost:8080/login",header,formDataInJson);
-    
+    if(response.status == 200) {
+        document.cookie = "username = " + username;
+        window.location.href = "../view/index.html";
+    }
    
 }
 
@@ -30,7 +32,7 @@ function buildJsonFormData(form) {
 function buildHeaders(authorization = null) {
     const headers = {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://127.0.0.1:5500/",
+        "Access-Control-Allow-Origin": "http://localhost:63342/",
         "Access-Control-Allow-Credentials": true
         
     };

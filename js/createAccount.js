@@ -16,7 +16,7 @@ async function submitUser(e,form) {
     const response = await myFetchService.performHttpPostRequest("http://localhost:8080/api/register",headers, requestBody);
     
     if(response != null) {
-        window.location.href = "http://127.0.0.1:5500/view/login.html";
+        window.location.href = "../view/login.html";
     }
 }
 

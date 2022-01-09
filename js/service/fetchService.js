@@ -29,11 +29,9 @@ export default class fetchService {
                 
 
             })
-            const content = await response.headers.forEach((x,y) => {
-                console.log("KEY " + y + " Value: " + x)
-            });
+            const content = await response;
+
             alert('User login success!');
-            // window.location.href = "http://127.0.0.1:5500/view/index.html";
             return content;
         } catch(err) {
             alert("Wrong Credentials! Try again!");
@@ -50,14 +48,10 @@ export default class fetchService {
                 mode: 'cors'
 
             })
-            // const content = await response.headers.forEach((x,y) => {
-            //     console.log("KEY " + y + " Value: " + x)
-            // });
-            
-            // window.location.href = "http://127.0.0.1:5500/view/index.html";
+
             return content;
         } catch(err) {
-            alert("Wrong Credentials! Try again!");
+            alert("Something went wrong!");
             throw err;
             
         }

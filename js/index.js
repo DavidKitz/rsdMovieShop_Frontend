@@ -1,8 +1,12 @@
 import fetchService from "./service/fetchService.js";
+import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
 const divResponse = document.getElementById("searchResult");
 const formItem = document.getElementById("sendForm");
+const myUserData = new loadUserData();
+
+myUserData.checkForUserCookie();
 
 formItem.addEventListener("submit", function(e) {
     findMoviesFromDb(e);
