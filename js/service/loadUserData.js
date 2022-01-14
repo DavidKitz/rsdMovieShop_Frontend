@@ -23,6 +23,7 @@ export default class loadUserData {
         try {
             const response = await fetch(apiUrl, {
                 method: "GET",
+                credentials: "include"
 
             });
             const content = await response.json();

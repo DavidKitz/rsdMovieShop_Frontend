@@ -14,8 +14,11 @@ async function loginUser(e,form) {
     const header = buildHeaders();
     const response = await myFetchService.performHttpPostLoginRequest("http://localhost:8080/login",header,formDataInJson);
     if(response.status == 200) {
+        alert('User login success!');
         document.cookie = "username = " + username;
         window.location.href = "../view/index.html";
+    } else {
+        alert("Wrong Credentials!");
     }
    
 }

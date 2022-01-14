@@ -5,6 +5,7 @@ const myFetchService = new fetchService();
 const divResponse = document.getElementById("searchResult");
 const formItem = document.getElementById("sendForm");
 const adminHref = document.getElementById("adminLink");
+const logout = document.getElementById("logout");
 const myUserData = new loadUserData();
 let username = "";
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
@@ -14,6 +15,7 @@ myUserData.checkForUserCookie();
 if(document.cookie.includes("username")) {
     username = document.cookie.split("=")[1];
 }
+
 if(username !== "") {
     let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/"+ username);
 
@@ -25,6 +27,30 @@ if(username !== "") {
         }
     })
 }
+
+//ADD EVENTLISTENER TO LOGOUT
+logout.addEventListener("click", function(e) {
+    logoutUser(e);}
+);
+async function logoutUser(e) {
+    e.preventDefault();
+    const headers = buildHeaders();
+    const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
+    if(response.status == 200) {
+        alert("Successful logout!");
+        document.cookie = "username = " + username + ";expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        window.location.href = "../view/index.html";
+    }
+
+}
+function buildHeaders(authorization = null) {
+    const headers = {
+        "Content-Type": "application/json",
+    };
+    return headers;
+}
+
+
 
 //GET MOVIES FROM IMDB API
 

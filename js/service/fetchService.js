@@ -17,6 +17,21 @@ export default class fetchService {
             throw err;
         }
     }
+    async performLogout(apiUrl,headers) {
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: headers,
+                credentials:"include",
+                mode: 'cors'
+            });
+            const content = await response;
+            return content;
+        } catch(err) {
+            throw err;
+        }
+    }
     async performHttpPostLoginRequest(apiUrl,headers, body) {
         
         try {
@@ -30,8 +45,6 @@ export default class fetchService {
 
             })
             const content = await response;
-
-            alert('User login success!');
             return content;
         } catch(err) {
             alert("Wrong Credentials! Try again!");
