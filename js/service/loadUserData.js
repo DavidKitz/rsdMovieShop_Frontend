@@ -4,13 +4,13 @@ export default class loadUserData {
     }
     async checkForUserCookie() {
 
-        let str = document.cookie.split("=");
+        let str = sessionStorage.getItem("username");
 
-        if(str.includes("username")) {
+        if(str !== null) {
             document.getElementById("userAndLogout").style.visibility='visible';
             document.getElementById("loginHref").style.visibility='hidden';
-            //ADD USERNAME TO NAVBAR AND UPPERCASE FIRST LETTER
-            document.getElementById(("userLink")).innerHTML = 'Welcome, ' + str[1].charAt(0).toUpperCase() + str[1].slice(1);
+            //ADD USERNAME TO NAVBAR AND UPPERCASE FIRST LETTERs
+            document.getElementById(("userLink")).innerHTML = 'Welcome, ' + str[0].charAt(0).toUpperCase() + str.slice(1);
 
         }
         else {

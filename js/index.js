@@ -12,15 +12,11 @@ let username = "";
 myUserData.checkForUserCookie();
 
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
-if(document.cookie.includes("username")) {
-    username = document.cookie.split("=")[1];
-}
-
-if(username !== "") {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/"+ username);
+if(username = sessionStorage.getItem("username") !== null) {
+    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
 
     permission.then(response => {
-        if(response["role"].includes("ROLE_ADMIN")) {
+        if (response["role"].includes("ROLE_ADMIN")) {
             adminHref.style.visibility = "visible";
         } else {
             adminHref.style.visibility = "hidden";
@@ -38,7 +34,7 @@ async function logoutUser(e) {
     const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
     if(response.status == 200) {
         alert("Successful logout!");
-        document.cookie = "username = " + username + ";expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        sessionStorage.clear();
         window.location.href = "../view/index.html";
     }
 

@@ -15,7 +15,7 @@ async function loginUser(e,form) {
     const response = await myFetchService.performHttpPostLoginRequest("http://localhost:8080/login",header,formDataInJson);
     if(response.status == 200) {
         alert('User login success!');
-        document.cookie = "username = " + username;
+        sessionStorage.setItem('username', username);
         window.location.href = "../view/index.html";
     } else {
         alert("Wrong Credentials!");
