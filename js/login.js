@@ -12,7 +12,7 @@ async function loginUser(e,form) {
     const username = document.getElementById("username").value;
     const formDataInJson = buildJsonFormData(form);
     const header = buildHeaders();
-    const response = await myFetchService.performHttpPostLoginRequest("http://localhost:8080/login",header,formDataInJson);
+    const response = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/login",header,formDataInJson);
     if(response.status == 200) {
         alert('User login success!');
         sessionStorage.setItem('username', username);

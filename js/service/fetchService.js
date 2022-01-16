@@ -32,7 +32,7 @@ export default class fetchService {
             throw err;
         }
     }
-    async performHttpPostLoginRequest(apiUrl,headers, body) {
+    async performHttpPostRequestWithBody(apiUrl, headers, body) {
         
         try {
             const response = await fetch(apiUrl, {

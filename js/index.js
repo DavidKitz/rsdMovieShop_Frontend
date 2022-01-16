@@ -12,7 +12,7 @@ let username = "";
 myUserData.checkForUserCookie();
 
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
-if(username = sessionStorage.getItem("username") !== null) {
+if((username = sessionStorage.getItem("username")) !== null) {
     let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
 
     permission.then(response => {

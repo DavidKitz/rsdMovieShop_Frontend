@@ -34,4 +34,20 @@ export default class loadUserData {
         }
 
     }
+    static buildHeader() {
+        const headers = {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "http://localhost:63342/",
+            "Access-Control-Allow-Credentials": true
+
+        };
+        return headers;
+    }
+    static buildJsonFormData(form) {
+        const jsonFormData = { };
+        for(const pair of new FormData(form)) {
+            jsonFormData[pair[0]] = pair[1];
+        }
+        return jsonFormData;
+    }
 }
