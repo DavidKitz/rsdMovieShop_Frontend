@@ -55,8 +55,7 @@ async function submitMovie(e,form) {
     }
 
     console.log(requestBody);
-    const response = await myFetchService.deleteMovieById("http://localhost:8080/api/admin/movies/12",headers);
-    //.performHttpPostRequestWithBody("http://localhost:8080/api/admin/addMovie", headers, requestBody);
+    const response = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/api/admin/addMovie", headers, requestBody);
 
     if(response.status === 200) {
         alert("MOVIE SUCCESSFULLY ADDED TO DB")
