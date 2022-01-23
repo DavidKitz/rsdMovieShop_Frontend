@@ -5,6 +5,7 @@ const myFetchService = new fetchService();
 const divResponse = document.getElementById("searchResult");
 const formItem = document.getElementById("sendForm");
 const adminHref = document.getElementById("adminLink");
+const adminHref2 = document.getElementById("adminLink2");
 const logout = document.getElementById("logout");
 const myUserData = new loadUserData();
 let username = "";
@@ -18,8 +19,10 @@ if((username = sessionStorage.getItem("username")) !== null) {
     permission.then(response => {
         if (response["role"].includes("ROLE_ADMIN")) {
             adminHref.style.visibility = "visible";
+            adminHref2.style.visibility = "visible";
         } else {
             adminHref.style.visibility = "hidden";
+            adminHref2.style.visibility = "hidden";
         }
     })
 }

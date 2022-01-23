@@ -57,16 +57,35 @@ export default class fetchService {
         try {
             const response = await fetch(apiUrl, {
                 method: "GET",
+                headers: headers,
                 credentials: "include",
                 mode: 'cors'
 
             })
-
+            const content = await response.json();
             return content;
         } catch(err) {
             alert("Something went wrong!");
             throw err;
             
+        }
+    }
+
+    async deleteMovieById(apiUrl,headers) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: "Delete",
+                headers: headers,
+                credentials: "include",
+                mode: 'cors'
+
+            })
+            const content = await response;
+            return content;
+        } catch(err) {
+            alert("Something went wrong!");
+            throw err;
+
         }
     }
 }
