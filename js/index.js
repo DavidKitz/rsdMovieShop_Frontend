@@ -58,15 +58,6 @@ formItem.addEventListener("submit", function(e) {
 });
 
 
-async function findMoviesFromDb(e) {
-    
-    e.preventDefault();
-    const response = await myFetchService.findAllMovies("http://localhost:8080/api/movies/all");
-    
-
-}
-
-
 async function imdbApiCall() {
     let request = await fetch('https://imdb-api.com/en/API/Top250Movies/k_ei4ys9ee');
     let response = await request.json();

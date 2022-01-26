@@ -9,6 +9,7 @@ export default class loadUserData {
         if(str !== null) {
             document.getElementById("userAndLogout").style.visibility='visible';
             document.getElementById("loginHref").style.visibility='hidden';
+            document.getElementById("registerHref").style.visibility='hidden';
             //ADD USERNAME TO NAVBAR AND UPPERCASE FIRST LETTERs
             document.getElementById(("userLink")).innerHTML = 'Welcome, ' + str[0].charAt(0).toUpperCase() + str.slice(1);
 
@@ -16,6 +17,7 @@ export default class loadUserData {
         else {
             document.getElementById("userAndLogout").style.visibility='hidden';
             document.getElementById("loginHref").style.visibility='visible';
+            document.getElementById("registerHref").style.visibility='visible';
 
         }
     }
