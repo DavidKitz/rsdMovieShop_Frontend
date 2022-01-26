@@ -1,16 +1,20 @@
 import fetchService from "./service/fetchService.js";
 import loadUserData from "./service/loadUserData.js";
 
-const myFetchService = new fetchService();
-const divResponse = document.getElementById("searchResult");
-const formItem = document.getElementById("sendForm");
 const adminHref = document.getElementById("adminLink");
 const adminHref2 = document.getElementById("adminLink2");
 const logout = document.getElementById("logout");
+const myFetchService = new fetchService();
 const myUserData = new loadUserData();
+const genres = document.getElementsByClassName("genres");
 let username = "";
-//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
 myUserData.checkForUserCookie();
+
+const formItem = document.getElementById("addMovie");
+
+formItem.addEventListener("submit", function(e) {
+    submitMovie(e,this);
+});
 
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
@@ -27,10 +31,43 @@ if((username = sessionStorage.getItem("username")) !== null) {
     })
 }
 
+function formRequestBody() {
+    const body = {
+        releaseYear : document.getElementById("releaseYear").value,
+        movieStock : document.getElementById("movieStock").value,
+        price : document.getElementById("price").value,
+        title : document.getElementById("title").value,
+        picture : document.getElementById("picture").value,
+        genres : []
+
+    }
+    return body;
+}
+
+async function submitMovie(e,form) {
+    e.preventDefault();
+    const headers = loadUserData.buildHeader();
+    const requestBody = formRequestBody();
+    for(let i = 0; i < genres.length; i++) {
+        if(genres[i].value !== "") {
+            requestBody["genres"].push(genres[i].value);
+        }
+    }
+
+    console.log(requestBody);
+    const response = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/api/admin/addMovie", headers, requestBody);
+
+    if(response.status === 200) {
+        alert("MOVIE SUCCESSFULLY ADDED TO DB")
+    }
+}
+
 //ADD EVENTLISTENER TO LOGOUT
 logout.addEventListener("click", function(e) {
     logoutUser(e);}
 );
+
+
 async function logoutUser(e) {
     e.preventDefault();
     const headers = buildHeaders();
@@ -50,28 +87,3 @@ function buildHeaders(authorization = null) {
 }
 
 
-
-//GET MOVIES FROM IMDB API
-
-formItem.addEventListener("submit", function(e) {
-    findMoviesFromDb(e);
-});
-
-
-async function imdbApiCall() {
-    let request = await fetch('https://imdb-api.com/en/API/Top250Movies/k_ei4ys9ee');
-    let response = await request.json();
-
-    for (let i = 0; i < 20; i++) {
-        const img = document.createElement("img");
-        const div = document.createElement("div");
-        div.classList.add("custom-div")
-        img.src = response["items"][i]["image"];
- 
-        div.append(img);
-        divResponse.append(div);
-        //console.log(response["items"][i]);
-    }
-  
-}
-imdbApiCall();

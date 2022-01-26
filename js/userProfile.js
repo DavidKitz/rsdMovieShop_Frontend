@@ -2,17 +2,17 @@ import fetchService from "./service/fetchService.js";
 import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
-const divResponse = document.getElementById("searchResult");
-const formItem = document.getElementById("sendForm");
+const myUserData = new loadUserData();
 const adminHref = document.getElementById("adminLink");
 const adminHref2 = document.getElementById("adminLink2");
 const logout = document.getElementById("logout");
-const myUserData = new loadUserData();
 let username = "";
-//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
+//ENABLE ROUTES FOR USER
 myUserData.checkForUserCookie();
 
-//CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
+//CHECK IF USER IS ADMIN AS WELL AND ENABLE ROUTES FOR ADMIN IF SO
+const permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/"+ username);
+
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
 
@@ -50,28 +50,6 @@ function buildHeaders(authorization = null) {
 }
 
 
+//TODO: GET ALL USER DATA FROM BACKEND AND FILL CURRENT FORM WITH DATA
 
-//GET MOVIES FROM IMDB API
-
-formItem.addEventListener("submit", function(e) {
-    findMoviesFromDb(e);
-});
-
-
-async function imdbApiCall() {
-    let request = await fetch('https://imdb-api.com/en/API/Top250Movies/k_ei4ys9ee');
-    let response = await request.json();
-
-    for (let i = 0; i < 20; i++) {
-        const img = document.createElement("img");
-        const div = document.createElement("div");
-        div.classList.add("custom-div")
-        img.src = response["items"][i]["image"];
- 
-        div.append(img);
-        divResponse.append(div);
-        //console.log(response["items"][i]);
-    }
-  
-}
-imdbApiCall();
+//TODO: GIVE THE OPTION TO UPDATE USER DATA WITH THE SAVE BUTTON - CALL BACKEND ROUTE TO UPDATE USER (EXCEPT ROLE)
