@@ -34,7 +34,7 @@ if((username = sessionStorage.getItem("username")) !== null) {
 function formRequestBody() {
     const body = {
         releaseYear : document.getElementById("releaseYear").value,
-        moviseStock : document.getElementById("movieStock").value,
+        movieStock : document.getElementById("movieStock").value,
         price : document.getElementById("price").value,
         title : document.getElementById("title").value,
         picture : document.getElementById("picture").value,

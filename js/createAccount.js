@@ -11,7 +11,6 @@ async function submitUser(e,form) {
     
     e.preventDefault();
     const requestBody = buildJsonFormData(form);
-    const btnSubmit = document.getElementById("btnSubmit");
     const headers = buildHeaders();
     const response = await myFetchService.performHttpPostRequest("http://localhost:8080/api/register",headers, requestBody);
     
@@ -28,10 +27,9 @@ function buildJsonFormData(form) {
     return jsonFormData;
 }
 
-function buildHeaders(authorization = null) {
+function buildHeaders() {
     const headers = {
-        "Content-Type": "application/json",
-        "Authorization": (authorization) ? authorization : "Bearer TOKEN_MISSING"
+        "Content-Type": "application/json"
     };
     return headers;
 }

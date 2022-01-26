@@ -35,9 +35,7 @@ function buildJsonFormData(form) {
 function buildHeaders(authorization = null) {
     const headers = {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:63342/",
         "Access-Control-Allow-Credentials": true
-        
     };
     return headers;
 }
