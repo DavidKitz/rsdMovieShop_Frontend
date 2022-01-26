@@ -88,4 +88,25 @@ export default class fetchService {
 
         }
     }
+    async performHttpPutRequestWithBody(apiUrl, headers, body) {
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: "PUT",
+                headers: headers,
+                credentials: "include",
+                mode: 'cors',
+                body: JSON.stringify(body),
+
+
+            })
+            const content = await response;
+            return content;
+        } catch(err) {
+            alert("Something went wrong! Try again!");
+            throw err;
+
+        }
+    }
+
 }

@@ -77,6 +77,9 @@ async function loadMovieData() {
 
         btnUpdate.className = "btn btn-primary";
         btnUpdate.innerHTML = "Update";
+        btnUpdate.addEventListener("click", function(e) {
+            updateMovie(this)
+        })
         cellUpdate.appendChild(btnUpdate);
         btnDelete.className = "btn btn-danger";
         btnDelete.innerHTML = "Delete";
@@ -102,5 +105,26 @@ async function deleteMovie(movieId) {
         location.reload();
     }
 
+}
+async function updateMovie(movieRow) {
+    let requestBody= {};
+    requestBody.movieId = movieRow.parentElement.parentElement.getElementsByTagName("td")[0].innerHTML;
+    requestBody.name = movieRow.parentElement.parentElement.getElementsByTagName("td")[1].innerHTML;
+    requestBody.releaseYear = movieRow.parentElement.parentElement.getElementsByTagName("td")[2].innerHTML;
+    requestBody.price = movieRow.parentElement.parentElement.getElementsByTagName("td")[3].innerHTML;
+    requestBody.amountInStock = movieRow.parentElement.parentElement.getElementsByTagName("td")[4].innerHTML;
+    requestBody.genres = "";
+    const headers = {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:63342/",
+        "Access-Control-Allow-Credentials": true
+
+    };
+    const response = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/admin/movies/" + requestBody["movieId"]
+        ,headers,requestBody);
+    if(response.status == 200) {
+        alert("Movie with the id " + requestBody["movieId"] + " successfully Updated!");
+        location.reload();
+    }
 }
 loadMovieData();
