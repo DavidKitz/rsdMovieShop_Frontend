@@ -20,7 +20,7 @@ async function loginUser(e,form) {
     } else {
         alert("Wrong Credentials!");
     }
-   
+
 }
 
 
@@ -46,7 +46,7 @@ function buildHeaders(authorization = null) {
 //     $('#loginForm').submit(function (event) {
 //       event.preventDefault();
 //       let jsonFormData = JSON.stringify(buildJsonFormData(loginForm));
-
+//       const username = document.getElementById("username").value;
 //       $.ajax({
 //         xhrFields: {
 //             withCredentials: true
@@ -55,9 +55,15 @@ function buildHeaders(authorization = null) {
 //         timeout: 1000,
 //         type: 'POST',
 //         url: 'http://localhost:8080/login',
-//         contentType: "application/json"
+//         contentType: "application/json",
+//           success: function(data) {
+//               alert('User login success with ajax!');
+//               sessionStorage.setItem('username', username);
+//               window.location.href = "../view/index.html";
+//               return data;
+//           }
 //       }).fail(function(jqXHR, textStatus, errorThrown) {
-
+//
 //         alert('Booh! Wrong credentials, try again!');
 //       });
 //     });
