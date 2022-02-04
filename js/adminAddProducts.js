@@ -8,9 +8,12 @@ const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 const genres = document.getElementsByClassName("genres");
 let username = "";
-myUserData.checkForUserCookie();
-
 const formItem = document.getElementById("addMovie");
+const checkUserLogin = await myUserData.checkForUserCookie();
+
+if(!checkUserLogin) {
+    window.location.href = "../view/index.html";
+}
 
 formItem.addEventListener("submit", function(e) {
     submitMovie(e,this);
@@ -27,6 +30,7 @@ if((username = sessionStorage.getItem("username")) !== null) {
         } else {
             adminHref.style.visibility = "hidden";
             adminHref2.style.visibility = "hidden";
+            window.location.href = "../view/index.html";
         }
     })
 }
@@ -46,15 +50,13 @@ function formRequestBody() {
 
 async function submitMovie(e,form) {
     e.preventDefault();
-    const headers = loadUserData.buildHeader();
+    const headers = await myUserData.buildHeader();
     const requestBody = formRequestBody();
     for(let i = 0; i < genres.length; i++) {
         if(genres[i].value !== "") {
             requestBody["genres"].push(genres[i].value);
         }
     }
-
-    console.log(requestBody);
     const response = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/api/admin/addMovie", headers, requestBody);
 
     if(response.status === 200) {
@@ -64,26 +66,11 @@ async function submitMovie(e,form) {
 
 //ADD EVENTLISTENER TO LOGOUT
 logout.addEventListener("click", function(e) {
-    logoutUser(e);}
+    myUserData.logoutUser(e);
+    }
 );
 
 
-async function logoutUser(e) {
-    e.preventDefault();
-    const headers = buildHeaders();
-    const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
-    if(response.status == 200) {
-        alert("Successful logout!");
-        sessionStorage.clear();
-        window.location.href = "../view/index.html";
-    }
 
-}
-function buildHeaders(authorization = null) {
-    const headers = {
-        "Content-Type": "application/json",
-    };
-    return headers;
-}
 
 

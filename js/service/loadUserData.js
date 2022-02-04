@@ -1,3 +1,5 @@
+import fetchService from "./fetchService.js";
+
 export default class loadUserData {
     constructor() {
 
@@ -12,13 +14,13 @@ export default class loadUserData {
             document.getElementById("registerHref").style.visibility='hidden';
             //ADD USERNAME TO NAVBAR AND UPPERCASE FIRST LETTERs
             document.getElementById(("userLink")).innerHTML = 'Welcome, ' + str[0].charAt(0).toUpperCase() + str.slice(1);
-
-        }
-        else {
+            return true;
+        } else {
             document.getElementById("userAndLogout").style.visibility='hidden';
             document.getElementById("loginHref").style.visibility='visible';
             document.getElementById("registerHref").style.visibility='visible';
 
+            return false;
         }
     }
     async checkForPermission(apiUrl) {
@@ -36,7 +38,19 @@ export default class loadUserData {
         }
 
     }
-    static buildHeader() {
+    async logoutUser(e) {
+        e.preventDefault();
+        const headers = this.buildHeader();
+        const myFetchService = new fetchService();
+        const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
+        if(response.status == 200) {
+            alert("Successful logout!");
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+
+    }
+    async buildHeader() {
         const headers = {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "http://localhost:63342/",
@@ -45,7 +59,7 @@ export default class loadUserData {
         };
         return headers;
     }
-    static buildJsonFormData(form) {
+    async buildJsonFormData(form) {
         const jsonFormData = { };
         for(const pair of new FormData(form)) {
             jsonFormData[pair[0]] = pair[1];

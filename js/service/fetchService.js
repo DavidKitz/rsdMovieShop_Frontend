@@ -10,8 +10,7 @@ export default class fetchService {
                 headers: headers,
                 body: JSON.stringify(body)
             });
-            const content = await response.json();
-            alert('User account created!');
+            const content = await response;
             return content;
         } catch(err) {
             throw err;

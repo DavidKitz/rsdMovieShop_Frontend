@@ -6,10 +6,12 @@ const myUserData = new loadUserData();
 const adminHref = document.getElementById("adminLink");
 const adminHref2 = document.getElementById("adminLink2");
 const logout = document.getElementById("logout");
+const checkUserLogin = await myUserData.checkForUserCookie();
 let username = "";
 //ENABLE ROUTES FOR USER
-myUserData.checkForUserCookie();
-
+if(!checkUserLogin) {
+    window.location.href = "../view/index.html";
+}
 //CHECK IF USER IS ADMIN AS WELL AND ENABLE ROUTES FOR ADMIN IF SO
 const permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/"+ username);
 
@@ -29,25 +31,8 @@ if((username = sessionStorage.getItem("username")) !== null) {
 
 //ADD EVENTLISTENER TO LOGOUT
 logout.addEventListener("click", function(e) {
-    logoutUser(e);}
+    myUserData.logoutUser(e);}
 );
-async function logoutUser(e) {
-    e.preventDefault();
-    const headers = buildHeaders();
-    const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
-    if(response.status == 200) {
-        alert("Successful logout!");
-        sessionStorage.clear();
-        window.location.href = "../view/index.html";
-    }
-
-}
-function buildHeaders(authorization = null) {
-    const headers = {
-        "Content-Type": "application/json",
-    };
-    return headers;
-}
 
 
 //TODO: GET ALL USER DATA FROM BACKEND AND FILL CURRENT FORM WITH DATA

@@ -28,7 +28,7 @@ if((username = sessionStorage.getItem("username")) !== null) {
 
 //ADD EVENTLISTENER TO LOGOUT
 logout.addEventListener("click", function(e) {
-    logoutUser(e);}
+    myUserData.logoutUser(e);}
 );
 async function logoutUser(e) {
     e.preventDefault();

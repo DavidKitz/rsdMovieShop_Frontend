@@ -1,6 +1,8 @@
 import fetchService from "./service/fetchService.js";
+import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
+const myUserData = new loadUserData();
 const formItem = document.getElementById("createUser");
 
 formItem.addEventListener("submit", function(e) {
@@ -10,26 +12,14 @@ formItem.addEventListener("submit", function(e) {
 async function submitUser(e,form) {
     
     e.preventDefault();
-    const requestBody = buildJsonFormData(form);
-    const headers = buildHeaders();
+    const requestBody = await myUserData.buildJsonFormData(form);
+    const headers = await myUserData.buildHeader();
     const response = await myFetchService.performHttpPostRequest("http://localhost:8080/api/register",headers, requestBody);
-    
-    if(response != null) {
+
+    if(response.status == 200) {
+        alert("User account created!")
         window.location.href = "../view/login.html";
+    } else {
+        alert("Something went wrong!")
     }
-}
-
-function buildJsonFormData(form) {
-    const jsonFormData = { };
-    for(const pair of new FormData(form)) {
-        jsonFormData[pair[0]] = pair[1];
-    }
-    return jsonFormData;
-}
-
-function buildHeaders() {
-    const headers = {
-        "Content-Type": "application/json"
-    };
-    return headers;
 }

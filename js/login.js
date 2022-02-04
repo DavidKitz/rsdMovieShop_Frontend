@@ -1,6 +1,8 @@
 import fetchService from "./service/fetchService.js";
+import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
+const myUserData = new loadUserData();
 const loginForm = document.getElementById("loginForm");
 
 loginForm.addEventListener("submit", function(e) {
@@ -10,8 +12,8 @@ loginForm.addEventListener("submit", function(e) {
 async function loginUser(e,form) {
     e.preventDefault();
     const username = document.getElementById("username").value;
-    const formDataInJson = buildJsonFormData(form);
-    const header = buildHeaders();
+    const formDataInJson = await myUserData.buildJsonFormData(form);
+    const header = await myUserData.buildHeader();
     const response = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/login",header,formDataInJson);
     if(response.status == 200) {
         alert('User login success!');
@@ -23,22 +25,6 @@ async function loginUser(e,form) {
 
 }
 
-
-function buildJsonFormData(form) {
-    const jsonFormData = { };
-    for(const pair of new FormData(form)) {
-        jsonFormData[pair[0]] = pair[1];
-    }
-    return jsonFormData;
-}
-
-function buildHeaders(authorization = null) {
-    const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": true
-    };
-    return headers;
-}
 
 //--- SAME CALL WITH AJAX (EASIER VERSION) ----
 

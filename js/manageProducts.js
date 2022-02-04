@@ -7,10 +7,13 @@ const logout = document.getElementById("logout");
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 const movieTable = document.getElementById("movieTable");
+const checkUserLogin = await myUserData.checkForUserCookie();
 let username = "";
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-myUserData.checkForUserCookie();
 
+if(!checkUserLogin) {
+    window.location.href = "../view/index.html";
+}
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
@@ -22,37 +25,20 @@ if((username = sessionStorage.getItem("username")) !== null) {
         } else {
             adminHref.style.visibility = "hidden";
             adminHref2.style.visibility = "hidden";
+            window.location.href = "../view/index.html";
         }
     })
 }
 
 //ADD EVENTLISTENER TO LOGOUT
 logout.addEventListener("click", function(e) {
-    logoutUser(e);}
-);
-async function logoutUser(e) {
-    e.preventDefault();
-    const headers = buildHeaders();
-    const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
-    if(response.status == 200) {
-        alert("Successful logout!");
-        sessionStorage.clear();
-        window.location.href = "../view/index.html";
+    myUserData.logoutUser(e);
     }
-
-}
-function buildHeaders(authorization = null) {
-    const headers = {
-        "Content-Type": "application/json",
-    };
-    return headers;
-}
+);
 
 
 async function loadMovieData() {
-    const headers = {
-        "Content-Type": "application/json"
-    }
+    const headers = myUserData.buildHeader();
     const response = await myFetchService.findAllMovies("http://localhost:8080/api/movies/all",headers);
     let indexCount = 1;
     response.forEach(element => {
@@ -92,12 +78,7 @@ async function loadMovieData() {
 
 }
 async function deleteMovie(movieId) {
-    const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:63342/",
-        "Access-Control-Allow-Credentials": true
-
-    };
+    const headers = await myUserData.buildHeader();
     const response = await myFetchService.deleteMovieById("http://localhost:8080/api/admin/movies/" + movieId
         ,headers);
     if(response.status == 200) {
@@ -114,12 +95,7 @@ async function updateMovie(movieRow) {
     requestBody.price = movieRow.parentElement.parentElement.getElementsByTagName("td")[3].innerHTML;
     requestBody.amountInStock = movieRow.parentElement.parentElement.getElementsByTagName("td")[4].innerHTML;
     requestBody.genres = "";
-    const headers = {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "http://localhost:63342/",
-        "Access-Control-Allow-Credentials": true
-
-    };
+    const headers = await myUserData.buildHeader();
     const response = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/admin/movies/" + requestBody["movieId"]
         ,headers,requestBody);
     if(response.status == 200) {
