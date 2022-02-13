@@ -70,6 +70,11 @@ h5{
 }
 .addCustomColor  {
     background-color: #fcfcfc;
+    transition:transform 0.1s;
+
+}
+.addCustomColor:hover{
+    transform:scale(1.1);
 }
 .showYear {
     font-family: 'Dosis',sans-serif;
