@@ -107,5 +107,22 @@ export default class fetchService {
 
         }
     }
+    async getMovieDetailById(movieId,headers) {
+        try {
+            const response = await fetch("http://localhost:8080/api/movies/"+movieId, {
+                method: "GET",
+                headers: headers,
+                credentials: "include",
+                mode: 'cors',
+
+            })
+            const content = await response.json();
+            return content;
+        } catch(err) {
+            alert("Something went wrong! Try again!");
+            throw err;
+
+        }
+    }
 
 }

@@ -30,17 +30,7 @@ if((username = sessionStorage.getItem("username")) !== null) {
 logout.addEventListener("click", function(e) {
     myUserData.logoutUser(e);}
 );
-async function logoutUser(e) {
-    e.preventDefault();
-    const headers = buildHeaders();
-    const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
-    if(response.status == 200) {
-        alert("Successful logout!");
-        sessionStorage.clear();
-        window.location.href = "../view/index.html";
-    }
 
-}
 
 async function movieDbCall() {
     const headers = {
@@ -52,10 +42,20 @@ async function movieDbCall() {
         const img = document.createElement("img");
         const div = document.createElement("div");
         div.classList.add("custom-div");
+        div.id = element["movieId"];
         img.src = element["movieUrl"]
         div.append(img);
+        div.addEventListener("click", function(e) {
+            openMovieDetails(e,this);
+        })
         movieDiv.append(div);
     })
 
+}
+
+function openMovieDetails(e,element) {
+    e.preventDefault();
+    sessionStorage.setItem('movieDetailsId', element.id);
+    window.location.href = "../view/movieDetails.html";
 }
 movieDbCall();
