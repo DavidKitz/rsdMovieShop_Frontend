@@ -40,9 +40,9 @@ formItem.addEventListener("submit", function(e) {
 
 
 async function imdbApiCall() {
-    let request = await fetch('https://imdb-api.com/en/API/Top250Movies/k_ei4ys9ee');
+    let request = await fetch('https://imdb-api.com/en/API/MostPopularMovies/k_ei4ys9ee');
     let response = await request.json();
-
+    console.log(response);
     for (let i = 0; i < 20; i++) {
         const img = document.createElement("img");
         const div = document.createElement("div");

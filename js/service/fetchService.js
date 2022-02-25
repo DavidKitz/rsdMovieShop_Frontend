@@ -97,8 +97,8 @@ export default class fetchService {
                 mode: 'cors',
                 body: JSON.stringify(body),
 
-
             })
+            console.log(body)
             const content = await response;
             return content;
         } catch(err) {

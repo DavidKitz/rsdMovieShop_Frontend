@@ -6,6 +6,7 @@ const adminHref = document.getElementById("adminLink");
 const adminHref2 = document.getElementById("adminLink2");
 const logout = document.getElementById("logout");
 const movieDiv = document.getElementById("collectMovieDetail")
+const cartButton = document.getElementById("addToCart");
 const myUserData = new loadUserData();
 let username = "";
 
@@ -25,12 +26,36 @@ if((username = sessionStorage.getItem("username")) !== null) {
             adminHref2.style.visibility = "hidden";
         }
     })
+    const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/"+sessionStorage.getItem("username"));
+    sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
 }
 
 //ADD EVENTLISTENER TO LOGOUT
 logout.addEventListener("click", function(e) {
     myUserData.logoutUser(e);}
 );
+
+cartButton.addEventListener("click", function(e) {
+    addItemToCart(e,this);
+});
+
+async function addItemToCart(e) {
+    e.preventDefault();
+    if(sessionStorage.getItem("username") == null) {
+        alert("You have to log in, or create an account to add items to the cart!")
+        return null;
+    }
+    let body = {movieID : sessionStorage.getItem("movieDetailsId"),
+        quantity : "2"}
+    body = JSON.stringify(body);
+    const headers = await myUserData.buildHeader();
+
+    const movieDetails = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/"
+        +sessionStorage.getItem("username")+"/cart/"+sessionStorage.getItem("userCartId"),headers,body);
+    console.log(movieDetails)
+
+
+}
 
 async function getMovieDetails() {
     let movieDetailsKey = sessionStorage.getItem("movieDetailsId");

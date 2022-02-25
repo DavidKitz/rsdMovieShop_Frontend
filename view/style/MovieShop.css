@@ -60,9 +60,15 @@ h5{
 .spaceTop {
     margin-top: 20px;
 }
+.floatRight {
+    float: right;
+}
 .spaceBottom {
     margin-bottom: 20px;
     margin-left: 10px;
+}
+.marginLeft {
+    margin-left: 50px;
 }
 .innerSpaceTop {
 
@@ -73,8 +79,20 @@ h5{
     transition:transform 0.1s;
 
 }
+.hrColor {
+    padding-top: 5px;
+    color: white;
+
+}
 .addCustomColor:hover{
     transform:scale(1.1);
+}
+.shoppingCart {
+    width: 70%;
+    height: 85%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0px 25px 40px #1687d933;
 }
 .showYear {
     font-family: 'Dosis',sans-serif;
@@ -126,10 +144,47 @@ h5{
     position: relative;
 }
 
+.Cart-Items{
+    margin-bottom: 10px;
+    width: 90%;
+    height: 30%;
+    display: flex;
+    justify-content: space-between;
+
+}
+.image-box{
+    width: 15%;
+    text-align: center;
+}
+.about{
+    height: 100%;
+}
+.title{
+    padding-top: 5px;
+    line-height: 10px;
+    font-size: 32px;
+    font-family: ‘Open Sans’;
+    font-weight: 800;
+    color: #202020;
+}
+.subtitle{
+    line-height: 10px;
+    font-size: 18px;
+    font-family: ‘Open Sans’;
+    font-weight: 600;
+    color: #909090;
+}
 #newsletter {
     color: white;
     text-align: center;
 
+}
+#cartOverview {
+    min-width: 500px;
+}
+#purchaseButton {
+
+    margin-left: 10px;
 }
 #searchResult {
     
