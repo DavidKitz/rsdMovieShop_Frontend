@@ -39,7 +39,8 @@ async function buildShoppingCart() {
     const cartItems = await myFetchService.findAllMovies("http://localhost:8080/api/user/" + sessionStorage.getItem("username") + "/cart/"
     + sessionStorage.getItem("userCartId"));
    //TODO: CONSTRUCT DIV FOR EACH ELEMENT IN CARTS
-    let setItem = cartItems["items"].forEach(async function(item) {
+    cartItems["items"].forEach(async function(item) {
+        console.log(item)
         const parentDiv = document.getElementById("cartRows");
         const div = document.createElement("div");
         const divImage = document.createElement("div");
@@ -54,18 +55,24 @@ async function buildShoppingCart() {
         const divPrices = document.createElement("div");
         const divPrice = document.createElement("div");
         const divRemove = document.createElement("div");
-        let responseMovieCall = await myFetchService.findAllMovies( "http://localhost:8080/api/movies/" + sessionStorage.getItem("movieDetailsId"),headers);
+        let responseMovieCall = await myFetchService.findAllMovies( "http://localhost:8080/api/movies/all",headers);
+        responseMovieCall.forEach(movieItem => {
+            if(movieItem["name"] == item["movie"]) {
+                responseMovieCall = movieItem;
+                return;
+            }
+        })
         div.classList.add("Cart-Items");
         div.classList.add("toWhite");
         divImage.classList.add('"image-box"');
         img.src = responseMovieCall["movieUrl"];
         img.style.height = "250px";
-        img.style.width = "auto";
+        img.style.width = "170px";
         divImage.append(img);
         div.append(divImage);
 
         console.log(responseMovieCall);
-        divAbout.classList.add('"about"');
+        divAbout.classList.add("newClass");
         divAbout.style.height = "250 px";
         h4.classList.add('"title"');
         h6.classList.add('"subtitle"');
@@ -75,9 +82,7 @@ async function buildShoppingCart() {
         divAbout.append(h6);
         div.append(divAbout);
 
-        divIncrease.classList.add('"btn"');
-        divCount.classList.add('"count"');
-        divDecrease.classList.add('"btn"');
+
         divIncrease.innerHTML = "+";
         divCount.innerHTML = item["amount"];
         divDecrease.innerHTML = "-"
@@ -86,13 +91,10 @@ async function buildShoppingCart() {
         divCounter.append(divDecrease);
         div.append(divCounter);
 
-        divPrices.classList.add('"prices"');
-        divPrice.classList.add('"amount"');
-        divPrice.classList.add('"remove"');
+
         divPrice.innerHTML = "$" + responseMovieCall["price"];
         //Add price to total Sum
         sum += item["amount"] * responseMovieCall["price"];
-        console.log(sum)
         divRemove.innerHTML = "<u>Remove</u>";
         divPrices.append(divPrice);
         divPrices.append(divRemove);
@@ -101,7 +103,6 @@ async function buildShoppingCart() {
         parentDiv.append(div);
 
         totalValue.innerHTML = "$ " + sum;
-        return sum;
         }
     )
 
