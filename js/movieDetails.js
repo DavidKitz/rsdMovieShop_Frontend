@@ -45,15 +45,16 @@ async function addItemToCart(e) {
         alert("You have to log in, or create an account to add items to the cart!")
         return null;
     }
-    let body = {movieID : sessionStorage.getItem("movieDetailsId"),
-        quantity : "2"}
-    body = JSON.stringify(body);
+    let body = {"movieID" : sessionStorage.getItem("movieDetailsId"),
+        "quantity" : 1}
+
     const headers = await myUserData.buildHeader();
 
     const movieDetails = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/"
         +sessionStorage.getItem("username")+"/cart/"+sessionStorage.getItem("userCartId"),headers,body);
-    console.log(movieDetails)
-
+    if(movieDetails.status == 200) {
+        window.location.href = "../view/ShoppingCart.html";
+    }
 
 }
 
@@ -71,6 +72,7 @@ async function getMovieDetails() {
     document.getElementById("description").innerHTML = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
     document.getElementById("price").innerHTML = "Price: " + movieDetails["price"] + "€";
     document.getElementById("stock").innerHTML = "Stock: " + movieDetails["amountInStock"];
+
     div.classList.add("custom-div");
     div.id = movieDetails["movieId"];
     img.classList.add("spaceTop");

@@ -50,60 +50,21 @@
     </div>
 </nav>
 <div id="cartOverview" class="container rounded bg-dark mt-5 mb-5">
-        <div  class="row">
-            <h2>YOUR SHOPPING CART </h2>
-            <div class="Cart-Items toWhite">
-                <div class=”image-box”>
-                    <img src="style/background.jpg" style="height:120px" />
-                </div>
-                <div class=”about”>
-                    <h4 class=”title”>Best Movie Ever</h4>
-                    <h6 class=”subtitle”>(2012)</h6>
-                </div>
-                <div class=”counter”>
-                    <div class=”counter”>
-                        <div class=”btn”>+</div>
-                        <div class=”count”>2</div>
-                        <div class=”btn”>-</div>
-                    </div>
-                </div>
-                <div class=”prices”>
-                    <div class=”amount”>$2.99</div>
-                    <div class=”remove”><u>Remove</u></div>
-                </div>
-
-            </div>
-            <div class="Cart-Items toWhite">
-                <div class=”image-box”>
-                    <img src="style/background.jpg" style="height:120px" />
-                </div>
-                <div class=”about”>
-                    <h4 class=”title”>Best Movie Ever</h4>
-                    <h6 class=”subtitle”>(2012)</h6>
-                </div>
-                <div class=”counter”>
-                    <div class=”counter”>
-                        <div class=”btn”>+</div>
-                        <div class=”count”>2</div>
-                        <div class=”btn”>-</div>
-                    </div>
-                </div>
-                <div class=”prices”>
-                    <div class=”amount”>$2.99</div>
-                    <div class=”remove”><u>Remove</u></div>
-                </div>
+        <div class="row">
+            <div id="cartRows">
+                <h2>YOUR SHOPPING CART </h2>
 
             </div>
             <hr class="hrColor">
-            <div class="toWhite" >
-                <div class="total-amount floatRight marginLeft innerSpaceTop">$0</div>
-                <div class="Subtotal floatRight innerSpaceTop">Sub-Total</div>
 
+            <div class="toWhite spaceRight" >
+                <div  id = "totalValue" class="total-amount floatRight marginLeft innerSpaceTop">$0</div>
+                <div class="Subtotal floatRight innerSpaceTop">Sub-Total</div>
 
             </div>
             <div class="mb-4">
                 <button id="purchaseButton" class="btn-success rounded shopCartColor innerSpaceTop floatRight spaceTop">Purchase</button>
-                <button class="btn-primary rounded shopCartColor innerSpaceTop floatRight spaceTop">Continue Shopping</button>
+                <button id="continueShopping" class="btn-primary rounded shopCartColor innerSpaceTop floatRight spaceTop">Continue Shopping</button>
 
             </div>
         </div>
@@ -122,7 +83,7 @@
     </div>
 </footer>
 
-<script type="module" src="../js/shoppingCart.js.js"></script>
+<script type="module" src="../js/shoppingCart.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

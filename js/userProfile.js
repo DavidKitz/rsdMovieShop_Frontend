@@ -13,8 +13,6 @@ if(!checkUserLogin) {
     window.location.href = "../view/index.html";
 }
 //CHECK IF USER IS ADMIN AS WELL AND ENABLE ROUTES FOR ADMIN IF SO
-const permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/"+ username);
-
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
 
