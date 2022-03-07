@@ -38,7 +38,6 @@ async function buildShoppingCart() {
     let totalValue = document.getElementById("totalValue");
     const cartItems = await myFetchService.findAllMovies("http://localhost:8080/api/user/" + sessionStorage.getItem("username") + "/cart/"
     + sessionStorage.getItem("userCartId"));
-   //TODO: CONSTRUCT DIV FOR EACH ELEMENT IN CARTS
     cartItems["items"].forEach(async function(item) {
         console.log(item)
         const parentDiv = document.getElementById("cartRows");
@@ -61,7 +60,7 @@ async function buildShoppingCart() {
                 responseMovieCall = movieItem;
                 return;
             }
-        })
+        });
         div.classList.add("Cart-Items");
         div.classList.add("toWhite");
         divImage.classList.add('"image-box"');
@@ -84,8 +83,17 @@ async function buildShoppingCart() {
 
 
         divIncrease.innerHTML = "+";
+        divIncrease.classList.add("addHoverMouse");
+        divIncrease.addEventListener("click", function() {
+            incrementNbr(item["cartItemID"],responseMovieCall["price"]);
+        })
         divCount.innerHTML = item["amount"];
-        divDecrease.innerHTML = "-"
+        divCount.setAttribute("class",item["cartItemID"]);
+        divDecrease.innerHTML = "-";
+        divDecrease.classList.add("addHoverMouse");
+        divDecrease.addEventListener("click", function () {
+            decrementNbr(this,item["cartItemID"],responseMovieCall["price"]);
+        })
         divCounter.append(divIncrease);
         divCounter.append(divCount);
         divCounter.append(divDecrease);
@@ -96,6 +104,11 @@ async function buildShoppingCart() {
         //Add price to total Sum
         sum += item["amount"] * responseMovieCall["price"];
         divRemove.innerHTML = "<u>Remove</u>";
+        divRemove.addEventListener("click",async function() {
+            removeCartItem(this,item["cartItemID"]);
+        });
+        divRemove.classList.add("addHoverMouse");
+
         divPrices.append(divPrice);
         divPrices.append(divRemove);
         div.append(divPrices);
@@ -107,6 +120,41 @@ async function buildShoppingCart() {
     )
 
 
+}
+async function removeCartItem(removeDiv,cartItemId,moviePrice, amount) {
+
+
+    const removeResponse = await myFetchService.deleteMovieById("http://localhost:8080/api/user/" + sessionStorage.getItem("username") +
+    "/cart/" + sessionStorage.getItem("userCartId") + "/?cartItemId=" + cartItemId);
+    if(removeResponse.status == 200) {
+        alert("Movie sucessfully deleted!");
+        location.reload();
+    } else {
+        alert("Something went wrong!");
+    }
+}
+function incrementNbr(cartItemId,moviePrice) {
+    //Check if current Stock is not lower than count in Cart
+    if(moviePrice <= document.getElementsByClassName(cartItemId)[0].innerHTML) {
+        alert("Not enough movies in Stock!");
+        return null;
+    }
+    ++document.getElementsByClassName(cartItemId)[0].innerHTML;
+    document.getElementById("totalValue").innerHTML = document.getElementById("totalValue")
+        .innerHTML.replace("$", "");
+    document.getElementById("totalValue").innerHTML = "$" + (Number(document.getElementById("totalValue").innerHTML)
+        + Number(moviePrice));
+}
+function decrementNbr(divElement,cartId,moviePrice) {
+    let countDiv = document.getElementsByClassName(cartId)[0];
+
+    if(countDiv.innerHTML > 1) {
+        countDiv.innerHTML = --countDiv.innerHTML;
+        document.getElementById("totalValue").innerHTML = document.getElementById("totalValue")
+            .innerHTML.replace("$", "");
+        document.getElementById("totalValue").innerHTML = "$" + (Number(document.getElementById("totalValue").innerHTML)
+            - Number(moviePrice));
+    }
 }
 //ADD EVENTLISTENER TO LOGOUT
 logout.addEventListener("click", function(e) {
