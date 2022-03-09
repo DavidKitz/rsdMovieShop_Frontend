@@ -16,16 +16,7 @@ myUserData.checkForUserCookie();
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
-    permission.then(response => {
-        if (response["role"].includes("ROLE_ADMIN")) {
-            adminHref.style.visibility = "visible";
-            adminHref2.style.visibility = "visible";
-        } else {
-            adminHref.style.visibility = "hidden";
-            adminHref2.style.visibility = "hidden";
-        }
-    })
+    let buildData = await myUserData.buildNavBasedOnPermission(permission);
     const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/"+sessionStorage.getItem("username"));
     sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
 }

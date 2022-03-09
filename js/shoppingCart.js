@@ -85,7 +85,7 @@ async function buildShoppingCart() {
         divIncrease.innerHTML = "+";
         divIncrease.classList.add("addHoverMouse");
         divIncrease.addEventListener("click", function() {
-            incrementNbr(item["cartItemID"],responseMovieCall["price"]);
+            incrementNbr(item["cartItemID"],responseMovieCall);
         })
         divCount.innerHTML = item["amount"];
         divCount.setAttribute("class",item["cartItemID"]);
@@ -121,7 +121,7 @@ async function buildShoppingCart() {
 
 
 }
-async function removeCartItem(removeDiv,cartItemId,moviePrice, amount) {
+async function removeCartItem(removeDiv,cartItemId) {
 
 
     const removeResponse = await myFetchService.deleteMovieById("http://localhost:8080/api/user/" + sessionStorage.getItem("username") +
@@ -133,9 +133,9 @@ async function removeCartItem(removeDiv,cartItemId,moviePrice, amount) {
         alert("Something went wrong!");
     }
 }
-function incrementNbr(cartItemId,moviePrice) {
+function incrementNbr(cartItemId,movie) {
     //Check if current Stock is not lower than count in Cart
-    if(moviePrice <= document.getElementsByClassName(cartItemId)[0].innerHTML) {
+    if(movie["amountInStock"] <= document.getElementsByClassName(cartItemId)[0].innerHTML) {
         alert("Not enough movies in Stock!");
         return null;
     }
@@ -143,7 +143,7 @@ function incrementNbr(cartItemId,moviePrice) {
     document.getElementById("totalValue").innerHTML = document.getElementById("totalValue")
         .innerHTML.replace("$", "");
     document.getElementById("totalValue").innerHTML = "$" + (Number(document.getElementById("totalValue").innerHTML)
-        + Number(moviePrice));
+        + Number(movie["price"]));
 }
 function decrementNbr(divElement,cartId,moviePrice) {
     let countDiv = document.getElementsByClassName(cartId)[0];

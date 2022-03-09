@@ -15,16 +15,7 @@ if(!checkUserLogin) {
 //CHECK IF USER IS ADMIN AS WELL AND ENABLE ROUTES FOR ADMIN IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
-    permission.then(response => {
-        if (response["role"].includes("ROLE_ADMIN")) {
-            adminHref.style.visibility = "visible";
-            adminHref2.style.visibility = "visible";
-        } else {
-            adminHref.style.visibility = "hidden";
-            adminHref2.style.visibility = "hidden";
-        }
-    })
+    let buildData = await myUserData.buildNavBasedOnPermission(permission);
 }
 
 //ADD EVENTLISTENER TO LOGOUT

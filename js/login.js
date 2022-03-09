@@ -4,7 +4,12 @@ import loadUserData from "./service/loadUserData.js";
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 const loginForm = document.getElementById("loginForm");
+let username;
 
+if((username = sessionStorage.getItem("username")) !== null) {
+    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+    let buildData = await myUserData.buildNavBasedOnPermission(permission);
+}
 loginForm.addEventListener("submit", function(e) {
     loginUser(e,this);
 });
