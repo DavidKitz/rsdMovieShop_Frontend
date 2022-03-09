@@ -1,19 +1,12 @@
 import fetchService from "./service/fetchService.js";
 import loadUserData from "./service/loadUserData.js";
 
-const adminHref = document.getElementById("adminLink");
-const adminHref2 = document.getElementById("adminLink2");
 const logout = document.getElementById("logout");
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 const genres = document.getElementsByClassName("genres");
 let username = "";
 const formItem = document.getElementById("addMovie");
-const checkUserLogin = await myUserData.checkForUserCookie();
-
-if(!checkUserLogin) {
-    window.location.href = "../view/index.html";
-}
 
 formItem.addEventListener("submit", function(e) {
     submitMovie(e,this);
@@ -21,8 +14,14 @@ formItem.addEventListener("submit", function(e) {
 
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+
+    if(permission["role"].includes("ROLE_USER")) {
+        window.location.href = "../view/index.html";
+    }
     let buildData = await myUserData.buildNavBasedOnPermission(permission);
+} else {
+    window.location.href = "../view/index.html";
 }
 
 function formRequestBody() {
@@ -53,12 +52,6 @@ async function submitMovie(e,form) {
         alert("MOVIE SUCCESSFULLY ADDED TO DB")
     }
 }
-
-//ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    myUserData.logoutUser(e);
-    }
-);
 
 
 

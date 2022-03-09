@@ -6,9 +6,12 @@ const myUserData = new loadUserData();
 const loginForm = document.getElementById("loginForm");
 let username;
 
+//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
     let buildData = await myUserData.buildNavBasedOnPermission(permission);
+} else {
+    myUserData.buildDefaultNav();
 }
 loginForm.addEventListener("submit", function(e) {
     loginUser(e,this);
@@ -31,7 +34,7 @@ async function loginUser(e,form) {
 }
 
 
-//--- SAME CALL WITH AJAX (EASIER VERSION) ----
+//--- SAME CALL WITH AJAX ----
 
 // jQuery(document).ready(function ($) {
 //     $('#loginForm').submit(function (event) {

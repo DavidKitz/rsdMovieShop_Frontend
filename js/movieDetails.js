@@ -2,29 +2,20 @@ import fetchService from "./service/fetchService.js";
 import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
-const adminHref = document.getElementById("adminLink");
-const adminHref2 = document.getElementById("adminLink2");
-const logout = document.getElementById("logout");
 const movieDiv = document.getElementById("collectMovieDetail")
 const cartButton = document.getElementById("addToCart");
 const myUserData = new loadUserData();
 let username = "";
 
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-myUserData.checkForUserCookie();
-
-//CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
     let buildData = await myUserData.buildNavBasedOnPermission(permission);
     const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/"+sessionStorage.getItem("username"));
     sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
+} else {
+    myUserData.buildDefaultNav();
 }
-
-//ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    myUserData.logoutUser(e);}
-);
 
 cartButton.addEventListener("click", function(e) {
     addItemToCart(e,this);
