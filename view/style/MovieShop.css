@@ -27,10 +27,6 @@ body {
     background-size: cover;
 }
 
-nav
-{
-    overflow: auto;
-}
 
 label{
     color: white;
@@ -44,6 +40,9 @@ img:hover {
 h5{
     color: black;
     text-align: center;
+}
+.dropdown {
+    position: absolute;
 }
 
 .custom-div {

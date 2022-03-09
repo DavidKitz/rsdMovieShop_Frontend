@@ -1,40 +1,22 @@
 import fetchService from "./service/fetchService.js";
 import loadUserData from "./service/loadUserData.js";
 
-const adminHref = document.getElementById("adminLink");
-const adminHref2 = document.getElementById("adminLink2");
-const logout = document.getElementById("logout");
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 const movieTable = document.getElementById("movieTable");
-const checkUserLogin = await myUserData.checkForUserCookie();
 let username = "";
-//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
 
-if(!checkUserLogin) {
-    window.location.href = "../view/index.html";
-}
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
 
-    permission.then(response => {
-        if (response["role"].includes("ROLE_ADMIN")) {
-            adminHref.style.visibility = "visible";
-            adminHref2.style.visibility = "visible";
-        } else {
-            adminHref.style.visibility = "hidden";
-            adminHref2.style.visibility = "hidden";
-            window.location.href = "../view/index.html";
-        }
-    })
-}
-
-//ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    myUserData.logoutUser(e);
+    if(permission["role"].includes("ROLE_USER")) {
+        window.location.href = "../view/index.html";
     }
-);
+    let buildData = await myUserData.buildNavBasedOnPermission(permission);
+} else {
+    window.location.href = "../view/index.html";
+}
 
 
 async function loadMovieData() {

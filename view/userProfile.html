@@ -15,37 +15,17 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="./index.html">MovieShop</a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07"
-                aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse" id="navbarsExample07">
-            <ul class="navbar-nav mr-auto">
+        <div class="navbar-collapse collapse" id="navbarsExample07" >
+            <ul id="defaultUl" class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="./movies.html">Movies<span class="sr-only"></span></a>
                 </li>
-
-                <li class="nav-item">
-                    <a id="registerHref" class="nav-link" href="CreateAccount.html">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a id="loginHref" class="nav-link" href="login.html">Login</a>
-                </li>
             </ul>
+            <ul id = "userAndLogout" class="navbar-nav ms-auto">
 
-            <ul id="userAndLogout" class="navbar-nav ms-auto">
-                <li id="adminLink" class="nav-item">
-                    <a class="nav-link" href="adminAddProducts.html">(admin) Add Movies</a>
-                </li>
-                <li id="adminLink2" class="nav-item">
-                    <a class="nav-link" href="manageProducts.html">(admin) Manage Movies</a>
-                </li>
-                <li class="nav-item">
-                    <a id="userLink" class="nav-link" href="userProfile.html"></a>
-                </li>
-                <li class="nav-item">
-                    <a id="logout" class="nav-link" href="">Logout</a>
-                </li>
             </ul>
         </div>
     </div>
@@ -93,6 +73,7 @@
                 <button id="updateData" class="btn btn-primary profile-button" type="submit">Save Profile</button>
             </div>
         </div>
+
     </div>
 
 </div>
@@ -111,15 +92,12 @@
 <script type="module" src="../js/userProfile.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script
         src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>

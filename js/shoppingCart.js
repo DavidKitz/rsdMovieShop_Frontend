@@ -3,32 +3,18 @@ import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
-const adminHref = document.getElementById("adminLink");
-const adminHref2 = document.getElementById("adminLink2");
-const logout = document.getElementById("logout");
-const checkUserLogin = await myUserData.checkForUserCookie();
 let username = "";
 
 document.getElementById("continueShopping").addEventListener("click", function () {
     window.location.href = "../view/movieDetails.html";
 })
-//ENABLE ROUTES FOR USER
-if(!checkUserLogin) {
-    window.location.href = "../view/index.html";
-}
-//CHECK IF USER IS ADMIN AS WELL AND ENABLE ROUTES FOR ADMIN IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
 
-    permission.then(response => {
-        if (response["role"].includes("ROLE_ADMIN")) {
-            adminHref.style.visibility = "visible";
-            adminHref2.style.visibility = "visible";
-        } else {
-            adminHref.style.visibility = "hidden";
-            adminHref2.style.visibility = "hidden";
-        }
-    })
+//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
+if((username = sessionStorage.getItem("username")) !== null) {
+    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+    let buildData = await myUserData.buildNavBasedOnPermission(permission);
+} else {
+    window.location.href = "../view/index.html";
 }
 async function buildShoppingCart() {
     const headers = {
@@ -85,7 +71,7 @@ async function buildShoppingCart() {
         divIncrease.innerHTML = "+";
         divIncrease.classList.add("addHoverMouse");
         divIncrease.addEventListener("click", function() {
-            incrementNbr(item["cartItemID"],responseMovieCall["price"]);
+            incrementNbr(item["cartItemID"],responseMovieCall);
         })
         divCount.innerHTML = item["amount"];
         divCount.setAttribute("class",item["cartItemID"]);
@@ -121,7 +107,7 @@ async function buildShoppingCart() {
 
 
 }
-async function removeCartItem(removeDiv,cartItemId,moviePrice, amount) {
+async function removeCartItem(removeDiv,cartItemId) {
 
 
     const removeResponse = await myFetchService.deleteMovieById("http://localhost:8080/api/user/" + sessionStorage.getItem("username") +
@@ -133,9 +119,9 @@ async function removeCartItem(removeDiv,cartItemId,moviePrice, amount) {
         alert("Something went wrong!");
     }
 }
-function incrementNbr(cartItemId,moviePrice) {
+function incrementNbr(cartItemId,movie) {
     //Check if current Stock is not lower than count in Cart
-    if(moviePrice <= document.getElementsByClassName(cartItemId)[0].innerHTML) {
+    if(movie["amountInStock"] <= document.getElementsByClassName(cartItemId)[0].innerHTML) {
         alert("Not enough movies in Stock!");
         return null;
     }
@@ -143,7 +129,7 @@ function incrementNbr(cartItemId,moviePrice) {
     document.getElementById("totalValue").innerHTML = document.getElementById("totalValue")
         .innerHTML.replace("$", "");
     document.getElementById("totalValue").innerHTML = "$" + (Number(document.getElementById("totalValue").innerHTML)
-        + Number(moviePrice));
+        + Number(movie["price"]));
 }
 function decrementNbr(divElement,cartId,moviePrice) {
     let countDiv = document.getElementsByClassName(cartId)[0];
@@ -156,8 +142,5 @@ function decrementNbr(divElement,cartId,moviePrice) {
             - Number(moviePrice));
     }
 }
-//ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    myUserData.logoutUser(e);}
-);
+
 buildShoppingCart();
