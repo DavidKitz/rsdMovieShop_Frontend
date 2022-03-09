@@ -70,18 +70,27 @@ export default class loadUserData {
             const liUserLogout = document.createElement("li");
             const aUserLink = document.createElement("a");
             const aUserLogout = document.createElement("a");
+            const liUserCart = document.createElement("li");
+            const aUserCart = document.createElement("a");
+
             liUserLink.classList.add("nav-item");
             liUserLogout.classList.add("nav-item");
-            aUserLink.innerHTML = 'Welcome, ' + username[0].charAt(0).toUpperCase() + username.slice(1);
-            aUserLogout.innerHTML = "Logout";
-            console.log(response);
+            liUserCart.classList.add("nav-item");
 
+            aUserLink.innerHTML = 'Welcome, ' +  username[0].charAt(0).toUpperCase() + username.slice(1);
+            aUserCart.innerHTML = "<i class='fas fa-shopping-cart'</i>";
+            aUserLogout.innerHTML = "Logout";
+
+            this.setMultipleAttributes(aUserCart,{"id":"userCart",
+                "class":"nav-link", "href":"ShoppingCart.html"});
             this.setMultipleAttributes(aUserLink,{"id":"userLink",
                 "class":"nav-link", "href":"userProfile.html"});
             this.setMultipleAttributes(aUserLogout,{"id":"logout", "class":"nav-link","href":""});
             liUserLink.append(aUserLink);
             liUserLogout.append(aUserLogout);
-            navUl.append(liUserLink,liUserLogout);
+            liUserCart.append(aUserCart);
+
+            navUl.append(liUserLink,liUserCart,liUserLogout);
 
             aUserLogout.addEventListener("click", function(e) {
                 logoutFunction.logoutUser(e);

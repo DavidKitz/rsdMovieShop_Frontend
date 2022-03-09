@@ -6,13 +6,15 @@ const myUserData = new loadUserData();
 let username = "";
 
 document.getElementById("continueShopping").addEventListener("click", function () {
-    window.location.href = "../view/movieDetails.html";
+    window.location.href = "../view/movies.html";
 })
 
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
     let buildData = await myUserData.buildNavBasedOnPermission(permission);
+    const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/"+sessionStorage.getItem("username"));
+    sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
 } else {
     window.location.href = "../view/index.html";
 }
