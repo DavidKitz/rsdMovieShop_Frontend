@@ -40,10 +40,14 @@ async function mappingUserData() {
     let lastName = response["lastName"];
     let email = response["email"];
     let username = sessionStorage.getItem("username");
+    let shippingAddress = response["shippingAddress"];
+    let profilePic = response["picture"];
     document.getElementById("firstName").value = firstName
     document.getElementById("lastName").value = lastName
     document.getElementById("email").value = email
     document.getElementById("username").value = username
+    document.getElementById("shippingAddress").value = shippingAddress
+    document.getElementById("profilePic").value = profilePic
 }
 
 async function updateUserData() {
@@ -53,6 +57,8 @@ async function updateUserData() {
     requestBody.firstName = document.getElementById("firstName").value
     requestBody.lastName = document.getElementById("lastName").value
     requestBody.email = document.getElementById("email").value
+    requestBody.shippingAddress = document.getElementById("shippingAddress").value
+    requestBody.picture = document.getElementById("profilePic").value
     console.log("req body",requestBody)
     const headers = await myUserData.buildHeader();
     const response = await  myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username,headers, requestBody);
