@@ -42,7 +42,6 @@ export default class loadUserData {
                 aElement.classList.add("nav-link","dropdown-toggle");
                 this.setMultipleAttributes(aElement,{"id" :"navbarDropdown","role":"button","data-toggle":"dropdown",
                     "aria-haspopup":"true", "aria-expanded":"false"});
-                aElement.setAttribute("role","button");
                 aElement.innerHTML = "Admin-routes";
                 liElement.append(aElement);
                 navUl.prepend(liElement);
@@ -51,15 +50,24 @@ export default class loadUserData {
                 this.setMultipleAttributes(divDropdown,{"class" :"dropdown-menu","aria-labelledby" : "navbarDropdown"});
                 const adminAddMovie = document.createElement("a");
                 const adminManageProducts = document.createElement("a");
+                const adminMangeUsers = document.createElement("a");
+                const adminMangeOrders = document.createElement("a");
 
                 this.setMultipleAttributes(adminAddMovie,{ "class" : "dropdown-item",
                     "href" : "adminAddProducts.html"});
-                adminAddMovie.innerHTML = "Add Movies";
                 this.setMultipleAttributes(adminManageProducts, {"class" : "dropdown-item",
                     "href": "manageProducts.html"});
+                this.setMultipleAttributes(adminMangeUsers,{"class" : "dropdown-item",
+                    "href": "manageUsers.html"});
+                this.setMultipleAttributes(adminMangeOrders,{"class" : "dropdown-item",
+                    "href": "manageOrders.html"});
+
+                adminAddMovie.innerHTML = "Add Movies";
                 adminManageProducts.innerHTML = "Manage Movies";
-                divDropdown.append(adminAddMovie);
-                divDropdown.append(adminManageProducts);
+                adminMangeUsers.innerHTML = "Manage Users";
+                adminMangeOrders.innerHTML = "Manage Orders";
+
+                divDropdown.append(adminMangeUsers,adminAddMovie,adminManageProducts,adminMangeOrders);
                 liElement.append(divDropdown);
             }
         if(response["role"].includes("ROLE_USER") || response["role"].includes("ROLE_ADMIN")) {
