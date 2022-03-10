@@ -33,7 +33,14 @@
 <div class="container rounded bg-dark mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-3"><img class="rounded-circle mt-5" width="200px" height="200px" src="https://www.cag-acg.org/images/quality/usericon-200px.png"><span class="font-weight-bold">Edogaru</span><span class="text-white-50">test@gmail.com</span><span> </span></div>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-3">
+                <img id="profilePic" class="rounded-circle mt-5"
+                     width="200px" height="200px"
+                     src="https://www.cag-acg.org/images/quality/usericon-200px.png"><span
+                    class="font-weight-bold">Edogaru</span></div>
+            <div>
+                <input type="file" class="form-control" id="updateProfilePic"/>
+            </div>
         </div>
         <div class="col-md-5 border-right">
             <div class="p-3 py-5">
@@ -41,24 +48,37 @@
                     <h4 class="text-right toWhite">Profile Settings</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
+                    <div class="col-md-6"><label class="labels">Name</label><input id="firstName" type="text"
+                                                                                   class="form-control"
+                                                                                   placeholder="first name">
+                    </div>
+                    <div class="col-md-6"><label class="labels">Surname</label><input id="lastName" type="text"
+                                                                                      class="form-control"
+                                                                                      placeholder="surname"></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="" value="username"></div>
-                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="email" value=""></div>
-                    <div class="col-md-12"><label class="labels">Role</label><input type="text" class="form-control" placeholder="role" value="" readonly></div>
+                    <div class="col-md-12"><label class="labels">Username</label><input id="username" type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="username" disabled>
+                    </div>
+                    <div class="col-md-12"><label class="labels">Email</label><input id="email" type="text"
+                                                                                     class="form-control"
+                                                                                     placeholder="email"></div>
 
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                <div class="col-md-12"><label class="labels">Address</label><input id="shippingAddress" type="text"
+                                                                                 class="form-control"
+                                                                                 placeholder="Address"></div>
+
                 </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+            <div class="mt-5 text-center">
+                <button id="updateData" class="btn btn-primary profile-button" type="submit">Save Profile</button>
             </div>
         </div>
 
     </div>
+
+</div>
 </div>
 </div>
 </div>
