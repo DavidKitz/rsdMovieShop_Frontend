@@ -58,8 +58,8 @@ async function updateUserData() {
     requestBody.lastName = document.getElementById("lastName").value
     requestBody.email = document.getElementById("email").value
     requestBody.shippingAddress = document.getElementById("shippingAddress").value
-    requestBody.picture = document.getElementById("profilePic").value
-    console.log("req body",requestBody)
+    requestBody.picture = (await updatePic().text()).big();
+    console.log("req body",requestBody.picture)
     const headers = await myUserData.buildHeader();
     const response = await  myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username,headers, requestBody);
 
@@ -79,7 +79,9 @@ function updatePic(){
         img.src = this.result
     }
     reader.readAsDataURL(selectedFile);
+
     console.log("test")
+    return selectedFile;
 }
 
 document.getElementById("updateProfilePic").addEventListener('change', (event) => {
