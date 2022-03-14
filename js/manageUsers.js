@@ -25,34 +25,32 @@ async function manageUserData() {
     response.forEach(element => {
         let row = movieTable.insertRow(indexCount);
         let cell1 = row.insertCell(0);
-        let cell2 = row.insertCell(1);
-        let cell3 = row.insertCell(2);
-        let cell4 = row.insertCell(3);
-        let cell5 = row.insertCell(4);
-        let cell6 = row.insertCell(5);
-        let cellUpdate = row.insertCell(6);
-        let cellDelete = row.insertCell(7);
+        let cellUsername = row.insertCell(1);
+        let cell2 = row.insertCell(2);
+        let cell3 = row.insertCell(3);
+        let cell4 = row.insertCell(4);
+        let cell5 = row.insertCell(5);
+        let cell6 = row.insertCell(6);
+        let cell7 = row.insertCell(7);
+        let cellUpdate = row.insertCell(8);
+        let cellDelete = row.insertCell(9);
         let btnDelete = document.createElement('button');
         let btnUpdate = document.createElement('button');
         cell1.innerHTML = element["id"]
+        cellUsername.innerHTML = element["username"];
         cell2.innerHTML = element["firstName"];
         cell3.innerHTML = element["lastName"];
         cell4.innerHTML = element["email"];
         cell6.innerHTML = element["enabled"];
 
         //CREATE DROPDOWN FOR USER ROLE
-
-
-
-
-
         cell5.classList.add("dropdown-toggle");
         myUserData.setMultipleAttributes(cell5,{"id" :"dropdownRole","role":"button","data-toggle":"dropdown",
             "aria-haspopup":"true", "aria-expanded":"false"});
         cell5.innerHTML = element["role"];
 
         const divDropdown = document.createElement("div");
-        myUserData.setMultipleAttributes(divDropdown,{"class" :"dropdown-menu","aria-labelledby" : "navbarDropdown"});
+        myUserData.setMultipleAttributes(divDropdown,{"class" :"dropdown-menu","aria-labelledby" : "dropdownRole"});
         const userRole = document.createElement("a");
         const adminRole = document.createElement("a");
         userRole.classList.add("dropdown-item");
@@ -72,6 +70,7 @@ async function manageUserData() {
         divDropdown.append(userRole,adminRole);
         cell5.append(divDropdown);
 
+        cell6.innerText = element["enabled"];
 
         btnUpdate.className = "btn btn-primary";
         btnUpdate.innerHTML = "Update";
@@ -88,36 +87,33 @@ async function manageUserData() {
         indexCount++;
     })
 };
-async function deleteUser(movieId) {
+async function deleteUser(userId) {
     const headers = await myUserData.buildHeader();
-    const response = await myFetchService.deleteMovieById("http://localhost:8080/api/admin/movies/" + movieId
+    const response = await myFetchService.deleteMovieById("http://localhost:8080/api/admin/user/" + userId
         ,headers);
     if(response.status == 200) {
-        alert("Movie with the id " + movieId + " successfully Deleted!");
+        alert("User with the id " + userId + " successfully Deleted!");
         location.reload();
     }
 
 }
-async function updateUser(movieRow) {
+async function updateUser(userRow) {
     let requestBody= {};
-   /* cell1.innerHTML = element["id"]
-    cell2.innerHTML = element["firstName"];
-    cell3.innerHTML = element["lastName"];
-    cell4.innerHTML = element["email"];
-    cell5.innerHTML = element["role"];
-    cell6.innerHTML = element["enabled"]; */
 
-
-    requestBody.firstName = movieRow.parentElement.parentElement.getElementsByTagName("td")[1].innerHTML;
-    requestBody.familyName = movieRow.parentElement.parentElement.getElementsByTagName("td")[2].innerHTML;
-    requestBody.email = movieRow.parentElement.parentElement.getElementsByTagName("td")[3].innerHTML;
-    requestBody.username;
-    requestBody.password;
+    let username = userRow.parentElement.parentElement.getElementsByTagName("td")[1].innerHTML;
+    requestBody.firstName = userRow.parentElement.parentElement.getElementsByTagName("td")[2].innerHTML;
+    requestBody.lastName = userRow.parentElement.parentElement.getElementsByTagName("td")[3].innerHTML;
+    requestBody.email = userRow.parentElement.parentElement.getElementsByTagName("td")[4].innerHTML;
+    requestBody.role = userRow.parentElement.parentElement.getElementsByTagName("td")[5].innerText;
+    let stringValue = userRow.parentElement.parentElement.getElementsByTagName("td")[6].innerText;
+    requestBody.enabled = JSON.parse(stringValue);
+    requestBody.username = username;
+    requestBody.password = userRow.parentElement.parentElement.getElementsByTagName("td")[7].innerText;
     const headers = await myUserData.buildHeader();
     const response = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/admin/updateUsers"
         ,headers,requestBody);
     if(response.status == 200) {
-        alert("Movie with the id " + requestBody["movieId"] + " successfully Updated!");
+        alert("User with username: " + username +" successfully Updated!");
         location.reload();
     }
 }
