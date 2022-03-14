@@ -58,8 +58,8 @@ async function updateUserData() {
     requestBody.lastName = document.getElementById("lastName").value
     requestBody.email = document.getElementById("email").value
     requestBody.shippingAddress = document.getElementById("shippingAddress").value
-    requestBody.picture = "NTHN";
-    console.log("req body",requestBody.picture)
+    requestBody.picture = await updatePic();
+
     const headers = await myUserData.buildHeader();
     const response = await  myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username,headers, requestBody);
 
@@ -69,22 +69,40 @@ async function updateUserData() {
         alert("Something went wrong!")
     }
 }
+function readFileAsync(file,call) {
+    if(call == 1) {
+        return new Promise((resolve, reject) => {
+            let reader = new FileReader();
+            reader.onload = () => {
 
-function updatePic(){
-    var selectedFile = document.getElementById("updateProfilePic").files[0];
-    var img = document.getElementById("profilePic");
-    var binaryBlob = "";
-    var reader = new FileReader();
-    reader.onload = function(){
-        img.src = this.result
-        var data = (reader.result).split(',')[1];
-        binaryBlob = atob(data);
-        return binaryBlob;
+                resolve(reader.result);
+            };
+
+            reader.onerror = reject;
+            //reader.readAsDataURL(file);
+            reader.readAsBinaryString(file);
+        })
     }
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader();
+        reader.onload = () => {
 
-    reader.readAsDataURL(selectedFile);
-    console.log('Encoded Binary File String:', binaryBlob);
-    return binaryBlob;
+            resolve(reader.result);
+        };
+
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    })
+
+}
+async function updatePic(){
+    let selectedFile = document.getElementById("updateProfilePic").files[0];
+    let img = document.getElementById("profilePic");
+    let result = await readFileAsync(selectedFile,1);
+    let imgResult = await readFileAsync(selectedFile,2);
+    img.src = imgResult;
+
+    return result;
 }
 
 document.getElementById("updateProfilePic").addEventListener('change', (event) => {
