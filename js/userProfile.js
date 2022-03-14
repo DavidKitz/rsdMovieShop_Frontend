@@ -58,7 +58,7 @@ async function updateUserData() {
     requestBody.lastName = document.getElementById("lastName").value
     requestBody.email = document.getElementById("email").value
     requestBody.shippingAddress = document.getElementById("shippingAddress").value
-    requestBody.picture = (await updatePic().text()).big();
+    requestBody.picture = "NTHN";
     console.log("req body",requestBody.picture)
     const headers = await myUserData.buildHeader();
     const response = await  myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username,headers, requestBody);
@@ -72,16 +72,19 @@ async function updateUserData() {
 
 function updatePic(){
     var selectedFile = document.getElementById("updateProfilePic").files[0];
-    var img = document.getElementById("profilePic")
-
+    var img = document.getElementById("profilePic");
+    var binaryBlob = "";
     var reader = new FileReader();
     reader.onload = function(){
         img.src = this.result
+        var data = (reader.result).split(',')[1];
+        binaryBlob = atob(data);
+        return binaryBlob;
     }
-    reader.readAsDataURL(selectedFile);
 
-    console.log("test")
-    return selectedFile;
+    reader.readAsDataURL(selectedFile);
+    console.log('Encoded Binary File String:', binaryBlob);
+    return binaryBlob;
 }
 
 document.getElementById("updateProfilePic").addEventListener('change', (event) => {
