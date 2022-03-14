@@ -42,7 +42,6 @@ export default class loadUserData {
                 aElement.classList.add("nav-link","dropdown-toggle");
                 this.setMultipleAttributes(aElement,{"id" :"navbarDropdown","role":"button","data-toggle":"dropdown",
                     "aria-haspopup":"true", "aria-expanded":"false"});
-                aElement.setAttribute("role","button");
                 aElement.innerHTML = "Admin-routes";
                 liElement.append(aElement);
                 navUl.prepend(liElement);
@@ -51,15 +50,24 @@ export default class loadUserData {
                 this.setMultipleAttributes(divDropdown,{"class" :"dropdown-menu","aria-labelledby" : "navbarDropdown"});
                 const adminAddMovie = document.createElement("a");
                 const adminManageProducts = document.createElement("a");
+                const adminMangeUsers = document.createElement("a");
+                const adminMangeOrders = document.createElement("a");
 
                 this.setMultipleAttributes(adminAddMovie,{ "class" : "dropdown-item",
                     "href" : "adminAddProducts.html"});
-                adminAddMovie.innerHTML = "Add Movies";
                 this.setMultipleAttributes(adminManageProducts, {"class" : "dropdown-item",
                     "href": "manageProducts.html"});
+                this.setMultipleAttributes(adminMangeUsers,{"class" : "dropdown-item",
+                    "href": "manageUsers.html"});
+                this.setMultipleAttributes(adminMangeOrders,{"class" : "dropdown-item",
+                    "href": "manageOrders.html"});
+
+                adminAddMovie.innerHTML = "Add Movies";
                 adminManageProducts.innerHTML = "Manage Movies";
-                divDropdown.append(adminAddMovie);
-                divDropdown.append(adminManageProducts);
+                adminMangeUsers.innerHTML = "Manage Users";
+                adminMangeOrders.innerHTML = "Manage Orders";
+
+                divDropdown.append(adminMangeUsers,adminAddMovie,adminManageProducts,adminMangeOrders);
                 liElement.append(divDropdown);
             }
         if(response["role"].includes("ROLE_USER") || response["role"].includes("ROLE_ADMIN")) {
@@ -70,18 +78,27 @@ export default class loadUserData {
             const liUserLogout = document.createElement("li");
             const aUserLink = document.createElement("a");
             const aUserLogout = document.createElement("a");
+            const liUserCart = document.createElement("li");
+            const aUserCart = document.createElement("a");
+
             liUserLink.classList.add("nav-item");
             liUserLogout.classList.add("nav-item");
-            aUserLink.innerHTML = 'Welcome, ' + username[0].charAt(0).toUpperCase() + username.slice(1);
-            aUserLogout.innerHTML = "Logout";
-            console.log(response);
+            liUserCart.classList.add("nav-item");
 
+            aUserLink.innerHTML = 'Welcome, ' +  username[0].charAt(0).toUpperCase() + username.slice(1);
+            aUserCart.innerHTML = "<i class='fas fa-shopping-cart'</i>";
+            aUserLogout.innerHTML = "Logout";
+
+            this.setMultipleAttributes(aUserCart,{"id":"userCart",
+                "class":"nav-link", "href":"ShoppingCart.html"});
             this.setMultipleAttributes(aUserLink,{"id":"userLink",
                 "class":"nav-link", "href":"userProfile.html"});
             this.setMultipleAttributes(aUserLogout,{"id":"logout", "class":"nav-link","href":""});
             liUserLink.append(aUserLink);
             liUserLogout.append(aUserLogout);
-            navUl.append(liUserLink,liUserLogout);
+            liUserCart.append(aUserCart);
+
+            navUl.append(liUserLink,liUserCart,liUserLogout);
 
             aUserLogout.addEventListener("click", function(e) {
                 logoutFunction.logoutUser(e);

@@ -5,14 +5,20 @@ const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 let username = "";
 
+document.getElementById("purchaseButton").addEventListener("click",function(e) {
+    addOrderItem(e);
+})
+
 document.getElementById("continueShopping").addEventListener("click", function () {
-    window.location.href = "../view/movieDetails.html";
+    window.location.href = "../view/movies.html";
 })
 
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
     let buildData = await myUserData.buildNavBasedOnPermission(permission);
+    const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/"+sessionStorage.getItem("username"));
+    sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
 } else {
     window.location.href = "../view/index.html";
 }
@@ -105,6 +111,17 @@ async function buildShoppingCart() {
         }
     )
 
+
+}
+async function addOrderItem(e) {
+    e.preventDefault();
+    const addOrder = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/api/user/"
+    + sessionStorage.getItem("username") + "/orders/"
+        + sessionStorage.getItem("userCartId"),myUserData.buildHeader(),{});
+    if(addOrder.status == 200) {
+        alert("Order sucessfully completed!");
+        location.reload();
+    }
 
 }
 async function removeCartItem(removeDiv,cartItemId) {
