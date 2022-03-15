@@ -136,6 +136,16 @@ export default class loadUserData {
         };
         return headers;
     }
+
+    async buildHeadersForFileUpload() {
+        const headers = {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "http://localhost:63342/",
+            "Access-Control-Allow-Credentials": true
+
+        };
+        return headers;
+    }
     async buildJsonFormData(form) {
         const jsonFormData = { };
         for(const pair of new FormData(form)) {

@@ -42,12 +42,14 @@ async function mappingUserData() {
     let username = sessionStorage.getItem("username");
     let shippingAddress = response["shippingAddress"];
     let profilePic = response["picture"];
+
+
     document.getElementById("firstName").value = firstName
     document.getElementById("lastName").value = lastName
     document.getElementById("email").value = email
     document.getElementById("username").value = username
     document.getElementById("shippingAddress").value = shippingAddress
-    document.getElementById("profilePic").value = profilePic
+    document.getElementById("profilePic").src = profilePic
 }
 
 async function updateUserData() {
@@ -69,45 +71,31 @@ async function updateUserData() {
         alert("Something went wrong!")
     }
 }
-function readFileAsync(file,call) {
-    if(call == 1) {
-        return new Promise((resolve, reject) => {
-            let reader = new FileReader();
-            reader.onload = () => {
 
-                resolve(reader.result);
-            };
-
-            reader.onerror = reject;
-            //reader.readAsDataURL(file);
-            reader.readAsBinaryString(file);
-        })
-    }
-    return new Promise((resolve, reject) => {
-        let reader = new FileReader();
-        reader.onload = () => {
-
-            resolve(reader.result);
-        };
-
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    })
-
-}
-async function updatePic(){
+async function updatePic() {
+    const response = await getUserData();
     let selectedFile = document.getElementById("updateProfilePic").files[0];
     let img = document.getElementById("profilePic");
-    let result = await readFileAsync(selectedFile,1);
-    let imgResult = await readFileAsync(selectedFile,2);
-    img.src = imgResult;
+    let reader = new FileReader();
+    reader.onload = async function () {
+        img.src = reader.result;
 
-    return result;
+        let formData = new FormData();
+        formData.append('file', selectedFile);
+
+        let headers = myUserData.buildHeadersForFileUpload();
+
+        await myFetchService.performHttpPostRequestForFileUpload("http://localhost:8080/api/user/" + username +
+            "/img/" +  response["id"], headers, formData)
+    }
+    reader.readAsDataURL(selectedFile)
+
+
 }
 
 document.getElementById("updateProfilePic").addEventListener('change', (event) => {
     event.preventDefault();
-    updatePic();
+    updatePic().then();
 })
 
 document.getElementById("updateData").addEventListener('click', (event) => {
