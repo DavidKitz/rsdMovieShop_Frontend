@@ -6,7 +6,7 @@ const myUserData = new loadUserData();
 let username = "";
 
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
+if ((username = sessionStorage.getItem("username")) !== null) {
     let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
     let buildData = await myUserData.buildNavBasedOnPermission(permission);
 } else {
@@ -14,8 +14,9 @@ if((username = sessionStorage.getItem("username")) !== null) {
 }
 
 //ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    myUserData.logoutUser(e);}
+logout.addEventListener("click", function (e) {
+        myUserData.logoutUser(e);
+    }
 );
 
 async function getUserData() {
@@ -41,7 +42,7 @@ async function mappingUserData() {
     let email = response["email"];
     let username = sessionStorage.getItem("username");
     let shippingAddress = response["shippingAddress"];
-    let profilePic = response["picture"];
+    let id = response["id"];
 
 
     document.getElementById("firstName").value = firstName
@@ -49,7 +50,7 @@ async function mappingUserData() {
     document.getElementById("email").value = email
     document.getElementById("username").value = username
     document.getElementById("shippingAddress").value = shippingAddress
-    document.getElementById("profilePic").src = profilePic
+    document.getElementById("profilePic").src = "http://localhost:8080/api/user/" + username + "/userImg/" + id
 }
 
 async function updateUserData() {
@@ -63,9 +64,9 @@ async function updateUserData() {
     requestBody.picture = await updatePic();
 
     const headers = await myUserData.buildHeader();
-    const response = await  myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username,headers, requestBody);
+    const response = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username, headers, requestBody);
 
-    if(response.status == 200) {
+    if (response.status == 200) {
         window.alert("User Data updated!")
     } else {
         alert("Something went wrong!")
@@ -86,7 +87,7 @@ async function updatePic() {
         let headers = myUserData.buildHeadersForFileUpload();
 
         await myFetchService.performHttpPostRequestForFileUpload("http://localhost:8080/api/user/" + username +
-            "/img/" +  response["id"], headers, formData)
+            "/img/" + response["id"], headers, formData)
     }
     reader.readAsDataURL(selectedFile)
 
