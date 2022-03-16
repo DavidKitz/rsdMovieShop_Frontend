@@ -42,12 +42,12 @@ async function mappingUserData() {
     let username = sessionStorage.getItem("username");
     let shippingAddress = response["shippingAddress"];
     let profilePic = response["picture"];
-    document.getElementById("firstName").value = firstName;
-    document.getElementById("lastName").value = lastName;
-    document.getElementById("email").value = email;
+    document.getElementById("firstName").value = firstName
+    document.getElementById("lastName").value = lastName
+    document.getElementById("email").value = email
     document.getElementById("username").value = username
     document.getElementById("shippingAddress").value = shippingAddress
-    document.getElementById("profilePic").value = profilePic
+    document.getElementById("profilePic").src = profilePic
 }
 
 async function updateUserData() {
@@ -69,49 +69,15 @@ async function updateUserData() {
         alert("Something went wrong!")
     }
 }
-function readFileAsync(file,call) {
-    if(call == 1) {
-        return new Promise((resolve, reject) => {
-            let reader = new FileReader();
-            reader.onload = () => {
 
-                resolve(reader.result);
-            };
-
-            reader.onerror = reject;
-            reader.readAsBinaryString(file);
-        })
-    }
-    return new Promise((resolve, reject) => {
-        let reader = new FileReader();
-        reader.onload = () => {
-
-            resolve(reader.result);
-        };
-
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    })
-
-}
-async function updatePic(){
+async function updatePic() {
+    const response = await getUserData();
     let selectedFile = document.getElementById("updateProfilePic").files[0];
     let img = document.getElementById("profilePic");
-    let headers = myUserData.buildHeader();
+    let result = await readFileAsync(selectedFile,1);
     let imgResult = await readFileAsync(selectedFile,2);
     img.src = imgResult;
-    var data=(reader.result).split(',')[1];
-    var binaryBlob = atob(data);
-    var formData = new FormData();
-    formData.append('id', response["id"]);
-    formData.append('username', response["username"])
-    formData.append('file', binaryBlob);
-    console.log(formData)
-    let body = {
-        "file" : selectedFile
-    }
-    let response = await myFetchService.performHttpPostRequest("http://localhost:8080/api/" + username +
-    "/img/" + userId,headers,body)
+
     return result;
 }
 

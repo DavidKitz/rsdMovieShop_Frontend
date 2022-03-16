@@ -8,7 +8,24 @@ export default class fetchService {
             const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: headers,
+                credentials:"include",
                 body: JSON.stringify(body)
+            });
+            const content = await response;
+            return content;
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async performHttpPostRequestForFileUpload(apiUrl,headers, body) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: headers,
+                credentials:"include",
+                body: body,
+                mode:'no-cors'
             });
             const content = await response;
             return content;
