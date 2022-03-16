@@ -33,8 +33,7 @@ async function loadMovieData() {
         let cell6 = row.insertCell(5);
         let cell7 = row.insertCell(6);
         let cell8 = row.insertCell(7);
-        let cellUpdate = row.insertCell(8);
-        let cellDelete = row.insertCell(9);
+
         let btnDelete = document.createElement('button');
         let btnUpdate = document.createElement('button');
         cell1.innerHTML = element["movieId"]
@@ -43,6 +42,16 @@ async function loadMovieData() {
         cell4.innerHTML = element["price"];
         cell5.innerHTML = element["amountInStock"];
 
+        //Read from Genres from Response-Array
+        let genreLength = 5;
+        element["genres"].forEach(item => {
+            if(genreLength <= 7) {
+                row.insertCell(genreLength).innerHTML = item;
+                genreLength++;
+            }
+        })
+        let cellUpdate = row.insertCell(8);
+        let cellDelete = row.insertCell(9);
         btnUpdate.className = "btn btn-primary";
         btnUpdate.innerHTML = "Update";
         btnUpdate.addEventListener("click", function(e) {
@@ -71,12 +80,17 @@ async function deleteMovie(movieId) {
 }
 async function updateMovie(movieRow) {
     let requestBody= {};
-    requestBody.movieId = movieRow.parentElement.parentElement.getElementsByTagName("td")[0].innerHTML;
-    requestBody.name = movieRow.parentElement.parentElement.getElementsByTagName("td")[1].innerHTML;
-    requestBody.releaseYear = movieRow.parentElement.parentElement.getElementsByTagName("td")[2].innerHTML;
-    requestBody.price = movieRow.parentElement.parentElement.getElementsByTagName("td")[3].innerHTML;
-    requestBody.amountInStock = movieRow.parentElement.parentElement.getElementsByTagName("td")[4].innerHTML;
-    requestBody.genres = "";
+    requestBody.movieId = movieRow.parentElement.parentElement.getElementsByTagName("td")[0].innerText;
+    requestBody.name = movieRow.parentElement.parentElement.getElementsByTagName("td")[1].innerText;
+    requestBody.releaseYear = movieRow.parentElement.parentElement.getElementsByTagName("td")[2].innerText;
+    requestBody.price = movieRow.parentElement.parentElement.getElementsByTagName("td")[3].innerText;
+    requestBody.stock = movieRow.parentElement.parentElement.getElementsByTagName("td")[4].innerText;
+    let genres = [];
+    for(let i = 5; i < 8;i++) {
+        genres.push(movieRow.parentElement.parentElement.getElementsByTagName("td")[i].innerText);
+    }
+    requestBody.genres = genres.toString();
+
     const headers = await myUserData.buildHeader();
     const response = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/admin/movies/" + requestBody["movieId"]
         ,headers,requestBody);

@@ -36,12 +36,16 @@ async function manageUserData() {
         let cellDelete = row.insertCell(9);
         let btnDelete = document.createElement('button');
         let btnUpdate = document.createElement('button');
-        cell1.innerHTML = element["id"]
+        let inputCell1 = document.createElement("INPUT");
+        cell1.innerText = element.id;
         cellUsername.innerHTML = element["username"];
+        cellUsername.contentEditable = true;
         cell2.innerHTML = element["firstName"];
+        cell2.contentEditable = true;
         cell3.innerHTML = element["lastName"];
+        cell3.contentEditable = true;
         cell4.innerHTML = element["email"];
-        cell6.innerHTML = element["enabled"];
+        cell4.contentEditable = true;
 
         //CREATE DROPDOWN FOR USER ROLE
         cell5.classList.add("dropdown-toggle");
@@ -70,7 +74,10 @@ async function manageUserData() {
         divDropdown.append(userRole,adminRole);
         cell5.append(divDropdown);
 
-        cell6.innerText = element["enabled"];
+        let checkbox = document.createElement("INPUT");
+        myUserData.setMultipleAttributes(checkbox,{"class":"form-check-input", "type":"checkbox","value":""})
+        checkbox.checked = element["enabled"];
+        cell6.append(checkbox);
 
         btnUpdate.className = "btn btn-primary";
         btnUpdate.innerHTML = "Update";
@@ -105,7 +112,7 @@ async function updateUser(userRow) {
     requestBody.lastName = userRow.parentElement.parentElement.getElementsByTagName("td")[3].innerHTML;
     requestBody.email = userRow.parentElement.parentElement.getElementsByTagName("td")[4].innerHTML;
     requestBody.role = userRow.parentElement.parentElement.getElementsByTagName("td")[5].innerText;
-    let stringValue = userRow.parentElement.parentElement.getElementsByTagName("td")[6].innerText;
+    let stringValue = userRow.parentElement.parentElement.getElementsByTagName("td")[6].childNodes[0].checked;
     requestBody.enabled = JSON.parse(stringValue);
     requestBody.username = username;
     requestBody.password = userRow.parentElement.parentElement.getElementsByTagName("td")[7].innerText;
@@ -117,5 +124,6 @@ async function updateUser(userRow) {
         location.reload();
     }
 }
+
 
 manageUserData();
