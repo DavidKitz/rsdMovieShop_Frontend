@@ -125,5 +125,11 @@ async function updateUser(userRow) {
     }
 }
 
-
+$(function() {
+    $('#userTable').bootstrapTable({
+        formatNoMatches: function () {
+            return
+        }
+    })
+});
 manageUserData();

@@ -99,4 +99,11 @@ async function updateMovie(movieRow) {
         location.reload();
     }
 }
+$(function() {
+    $('#movieTable').bootstrapTable({
+        formatNoMatches: function () {
+            return
+        }
+    })
+});
 loadMovieData();
