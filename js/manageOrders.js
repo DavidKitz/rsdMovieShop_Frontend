@@ -3,9 +3,8 @@ import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
-const movieTable = document.getElementById("userTable");
+const orderTable = document.getElementById("orderTable");
 let username = "";
-
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
@@ -23,7 +22,7 @@ async function loadOrderData() {
     let indexCount = 1;
     response.forEach(element => {
 
-        let row = movieTable.insertRow(indexCount);
+        let row = orderTable.insertRow(indexCount);
         let cell1 = row.insertCell(0);
         let cell2 = row.insertCell(1);
         let cell3 = row.insertCell(2);
@@ -103,6 +102,8 @@ async function loadOrderData() {
         indexCount++;
     })
 
+
+
 }
 async function deleteOrder(orderId) {
     const headers = await myUserData.buildHeader();
@@ -129,3 +130,12 @@ async function updateOrder(userRow) {
     }
 }
 loadOrderData();
+
+$(function() {
+    $('#orderTable').bootstrapTable({
+        formatNoMatches: function () {
+            return
+        }
+    })
+});
+
