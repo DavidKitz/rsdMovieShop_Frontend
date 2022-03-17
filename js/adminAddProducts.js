@@ -15,7 +15,10 @@ formItem.addEventListener("submit", function(e) {
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
 if((username = sessionStorage.getItem("username")) !== null) {
     let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
+    if(permission.status == 404) {
+        sessionStorage.clear();
+        window.location.href = "../view/index.html";
+    }
     if(permission["role"].includes("ROLE_USER")) {
         window.location.href = "../view/index.html";
     }

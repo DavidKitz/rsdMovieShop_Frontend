@@ -7,12 +7,22 @@ const loginForm = document.getElementById("loginForm");
 let username;
 
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-    let buildData = await myUserData.buildNavBasedOnPermission(permission);
-} else {
-    myUserData.buildDefaultNav();
+async function checkPermission() {
+    if((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if(permission.status == 404) {
+            myUserData.buildDefaultNav();
+            sessionStorage.clear();
+            return;
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+    } else {
+        myUserData.buildDefaultNav();
+    }
 }
+
+checkPermission();
+
 loginForm.addEventListener("submit", function(e) {
     loginUser(e,this);
 });
@@ -24,7 +34,6 @@ async function loginUser(e,form) {
     const header = await myUserData.buildHeader();
     const response = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/login",header,formDataInJson);
     if(response.status == 200) {
-        alert('User login success!');
         sessionStorage.setItem('username', username);
         window.location.href = "../view/index.html";
     } else {

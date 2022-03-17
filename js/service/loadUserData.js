@@ -35,6 +35,7 @@ export default class loadUserData {
     async buildNavBasedOnPermission(response) {
 
             if (response["role"].includes("ROLE_ADMIN")) {
+                sessionStorage.setItem("x","y");
                 const navUl = document.getElementById("userAndLogout");
                 const liElement = document.createElement("li");
                 liElement.classList.add("nav-item","dropdown");
@@ -104,7 +105,6 @@ export default class loadUserData {
                 logoutFunction.logoutUser(e);
             });
         }
-
     }
     async buildDefaultNav() {
         const defaulUl = document.getElementById("defaultUl");

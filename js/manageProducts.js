@@ -7,16 +7,21 @@ const movieTable = document.getElementById("movieTable");
 let username = "";
 
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
-    if(permission["role"].includes("ROLE_USER")) {
+async function checkPermission() {
+    if ((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if (permission.status == 404) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+        const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/" + sessionStorage.getItem("username"));
+        sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
+    } else {
         window.location.href = "../view/index.html";
     }
-    let buildData = await myUserData.buildNavBasedOnPermission(permission);
-} else {
-    window.location.href = "../view/index.html";
 }
+checkPermission();
 
 
 async function loadMovieData() {
@@ -31,22 +36,37 @@ async function loadMovieData() {
         let cell4 = row.insertCell(3);
         let cell5 = row.insertCell(4);
         let cell6 = row.insertCell(5);
+        cell6.contentEditable = true;
         let cell7 = row.insertCell(6);
+        cell7.contentEditable = true;
         let cell8 = row.insertCell(7);
+        cell8.contentEditable = true;
 
         let btnDelete = document.createElement('button');
         let btnUpdate = document.createElement('button');
         cell1.innerHTML = element["movieId"]
         cell2.innerHTML = element["name"];
+        cell2.contentEditable = true;
         cell3.innerHTML = element["releaseYear"];
+        cell3.contentEditable = true;
         cell4.innerHTML = element["price"];
+        cell4.contentEditable = true;
         cell5.innerHTML = element["amountInStock"];
+        cell5.contentEditable = true;
 
         //Read from Genres from Response-Array
         let genreLength = 5;
         element["genres"].forEach(item => {
             if(genreLength <= 7) {
-                row.insertCell(genreLength).innerHTML = item;
+                if(genreLength == 5) {
+                    cell6.innerHTML = item;
+                }
+                if(genreLength == 6) {
+                    cell7.innerHTML = item;
+                }
+                if(genreLength == 7) {
+                    cell8.innerHTML = item;
+                }
                 genreLength++;
             }
         })

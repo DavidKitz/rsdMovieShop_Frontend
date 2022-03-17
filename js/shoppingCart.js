@@ -5,6 +5,23 @@ const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 let username = "";
 
+//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
+async function checkPermission() {
+    if ((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if (permission.status == 404) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+        const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/" + sessionStorage.getItem("username"));
+        sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
+    } else {
+        window.location.href = "../view/index.html";
+    }
+}
+checkPermission();
+
 document.getElementById("purchaseButton").addEventListener("click",function(e) {
     addOrderItem(e);
 })
@@ -13,15 +30,6 @@ document.getElementById("continueShopping").addEventListener("click", function (
     window.location.href = "../view/movies.html";
 })
 
-//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-    let buildData = await myUserData.buildNavBasedOnPermission(permission);
-    const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/"+sessionStorage.getItem("username"));
-    sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
-} else {
-    window.location.href = "../view/index.html";
-}
 async function buildShoppingCart() {
     const headers = {
         "Content-Type": "application/json"

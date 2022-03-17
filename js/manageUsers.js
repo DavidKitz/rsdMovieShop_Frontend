@@ -7,16 +7,21 @@ const movieTable = document.getElementById("userTable");
 let username = "";
 
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
-    if(permission["role"].includes("ROLE_USER")) {
+async function checkPermission() {
+    if ((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if (permission.status == 404) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+        const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/" + sessionStorage.getItem("username"));
+        sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
+    } else {
         window.location.href = "../view/index.html";
     }
-    let buildData = await myUserData.buildNavBasedOnPermission(permission);
-} else {
-    window.location.href = "../view/index.html";
 }
+checkPermission();
 
 async function manageUserData() {
     const response = await myFetchService.findAllMovies("http://localhost:8080/api/admin/all",myUserData.buildHeader());
@@ -36,7 +41,6 @@ async function manageUserData() {
         let cellDelete = row.insertCell(9);
         let btnDelete = document.createElement('button');
         let btnUpdate = document.createElement('button');
-        let inputCell1 = document.createElement("INPUT");
         cell1.innerText = element.id;
         cellUsername.innerHTML = element["username"];
         cellUsername.contentEditable = true;
@@ -46,6 +50,7 @@ async function manageUserData() {
         cell3.contentEditable = true;
         cell4.innerHTML = element["email"];
         cell4.contentEditable = true;
+        cell7.contentEditable = true;
 
         //CREATE DROPDOWN FOR USER ROLE
         cell5.classList.add("dropdown-toggle");

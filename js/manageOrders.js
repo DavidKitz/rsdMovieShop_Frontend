@@ -6,16 +6,21 @@ const myUserData = new loadUserData();
 const orderTable = document.getElementById("orderTable");
 let username = "";
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
-    if(permission["role"].includes("ROLE_USER")) {
+async function checkPermission() {
+    if ((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if (permission.status == 404) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+        const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/" + sessionStorage.getItem("username"));
+        sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
+    } else {
         window.location.href = "../view/index.html";
     }
-    let buildData = await myUserData.buildNavBasedOnPermission(permission);
-} else {
-    window.location.href = "../view/index.html";
 }
+checkPermission();
 async function loadOrderData() {
     const headers = myUserData.buildHeader();
     const response = await myFetchService.findAllMovies("http://localhost:8080/api/admin/orders/all",headers);

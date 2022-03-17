@@ -12,12 +12,21 @@ movieOptions.addEventListener("change",function(e) {
     movieFilter(this);
 });
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-    let buildData = await myUserData.buildNavBasedOnPermission(permission);
-} else {
-    myUserData.buildDefaultNav();
+async function checkPermission() {
+    if((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if(permission.status == 404) {
+            myUserData.buildDefaultNav();
+            sessionStorage.clear();
+            return;
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+    } else {
+        myUserData.buildDefaultNav();
+    }
 }
+
+checkPermission();
 
 async function movieDbCall() {
     const headers = {
