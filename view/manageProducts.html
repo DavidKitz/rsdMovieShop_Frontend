@@ -9,6 +9,7 @@
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css">
 
 </head>
 <body>
@@ -36,8 +37,8 @@
 
     <div class="row">
         <div class="p-3 py-5 ">
-            <table class="table table-striped table-dark" id="movieTable" contenteditable="true">
-                <thread>
+            <table class="table table-striped table-dark" id="movieTable">
+                <thead>
                     <tr>
                         <th scope="col">Nr</th>
                         <th scope="col">Title</th>
@@ -50,7 +51,7 @@
                         <th scope="col">Update</th>
                         <th scope="col">Delete</th>
                     </tr>
-                </thread>
+                </thead>
             </table>
         </div>
     </div>
@@ -78,5 +79,6 @@
 <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
 </body>
 </html>

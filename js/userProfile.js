@@ -5,17 +5,15 @@ const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 let username = "";
 
-//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
+if ((username = sessionStorage.getItem("username")) !== null) {
     let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-    let buildData = await myUserData.buildNavBasedOnPermission(permission);
 } else {
     window.location.href = "../view/index.html";
 }
 
-//ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    myUserData.logoutUser(e);}
+logout.addEventListener("click", function (e) {
+        myUserData.logoutUser(e);
+    }
 );
 
 async function getUserData() {
@@ -26,7 +24,7 @@ async function getUserData() {
             credentials: "include",
             mode: 'cors',
         })
-        const content = await response.json();
+         const content = await response.json();
         return content;
     } catch (err) {
         alert("Something went wrong! Try again!");
@@ -41,13 +39,19 @@ async function mappingUserData() {
     let email = response["email"];
     let username = sessionStorage.getItem("username");
     let shippingAddress = response["shippingAddress"];
-    let profilePic = response["picture"];
+    let id = response["id"];
+    let picture = "https://www.cag-acg.org/images/quality/usericon-200px.png";
+    if (response["picture"] != null) {
+        picture ="http://localhost:8080/api/user/" + username + "/userImg/" + id
+    }
+
+
     document.getElementById("firstName").value = firstName
     document.getElementById("lastName").value = lastName
     document.getElementById("email").value = email
     document.getElementById("username").value = username
     document.getElementById("shippingAddress").value = shippingAddress
-    document.getElementById("profilePic").src = profilePic
+    document.getElementById("profilePic").src = picture
 }
 
 async function updateUserData() {
@@ -61,9 +65,9 @@ async function updateUserData() {
     requestBody.picture = await updatePic();
 
     const headers = await myUserData.buildHeader();
-    const response = await  myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username,headers, requestBody);
+    const response = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username, headers, requestBody);
 
-    if(response.status == 200) {
+    if (response.status == 200) {
         window.alert("User Data updated!")
     } else {
         alert("Something went wrong!")
@@ -74,26 +78,31 @@ async function updatePic() {
     const response = await getUserData();
     let selectedFile = document.getElementById("updateProfilePic").files[0];
     let img = document.getElementById("profilePic");
-    let result = await readFileAsync(selectedFile,1);
-    let imgResult = await readFileAsync(selectedFile,2);
-    img.src = imgResult;
 
-    return result;
+    if (selectedFile != null) {
+        let reader = new FileReader();
+        reader.onload = async function () {
+            img.src = reader.result;
+
+            let formData = new FormData();
+            formData.append('file', selectedFile);
+
+            let headers = myUserData.buildHeadersForFileUpload();
+
+            await myFetchService.performHttpPostRequestForFileUpload("http://localhost:8080/api/user/" + username +
+                "/img/" + response["id"], headers, formData)
+        }
+        reader.readAsDataURL(selectedFile)
+    }
 }
 
 document.getElementById("updateProfilePic").addEventListener('change', (event) => {
     event.preventDefault();
-    updatePic();
+    updatePic().then();
 })
 
 document.getElementById("updateData").addEventListener('click', (event) => {
     event.preventDefault();
     updateUserData()
 });
-
-
 window.onload = mappingUserData();
-
-//TODO: GET ALL USER DATA FROM BACKEND AND FILL CURRENT FORM WITH DATA
-
-//TODO: GIVE THE OPTION TO UPDATE USER DATA WITH THE SAVE BUTTON - CALL BACKEND ROUTE TO UPDATE USER (EXCEPT ROLE)
