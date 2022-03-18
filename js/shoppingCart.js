@@ -8,8 +8,16 @@ let username = "";
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
 async function checkPermission() {
     if ((username = sessionStorage.getItem("username")) !== null) {
+
         let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+
         if (permission.status == 404) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+        console.log(permission)
+        if(permission.status == 401) {
+
             sessionStorage.clear();
             window.location.href = "../view/index.html";
         }
@@ -39,7 +47,6 @@ async function buildShoppingCart() {
     const cartItems = await myFetchService.findAllMovies("http://localhost:8080/api/user/" + sessionStorage.getItem("username") + "/cart/"
     + sessionStorage.getItem("userCartId"));
     cartItems["items"].forEach(async function(item) {
-        console.log(item)
         const parentDiv = document.getElementById("cartRows");
         const div = document.createElement("div");
         const divImage = document.createElement("div");

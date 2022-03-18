@@ -13,9 +13,9 @@ export default class loadUserData {
 
             });
             const content = await response.json();
-
             return content;
         } catch (err) {
+
             throw err;
         }
 

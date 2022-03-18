@@ -15,6 +15,10 @@ async function checkPermission() {
             sessionStorage.clear();
             window.location.href = "../view/index.html";
         }
+        if(permission.status == 401) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
         let buildData = await myUserData.buildNavBasedOnPermission(permission);
         const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/" + sessionStorage.getItem("username"));
         sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);

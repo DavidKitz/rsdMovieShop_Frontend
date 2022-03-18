@@ -19,6 +19,10 @@ if((username = sessionStorage.getItem("username")) !== null) {
         sessionStorage.clear();
         window.location.href = "../view/index.html";
     }
+    if(permission.status == 401) {
+        sessionStorage.clear();
+        window.location.href = "../view/index.html";
+    }
     if(permission["role"].includes("ROLE_USER")) {
         window.location.href = "../view/index.html";
     }

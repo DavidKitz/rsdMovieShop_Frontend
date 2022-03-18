@@ -17,6 +17,10 @@ async function checkPermission() {
             sessionStorage.clear();
             return;
         }
+        if(permission.status == 401) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
         let buildData = await myUserData.buildNavBasedOnPermission(permission);
     } else {
         myUserData.buildDefaultNav();
