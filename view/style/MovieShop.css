@@ -191,11 +191,19 @@ h5{
 
     margin-left: 10px;
 }
-.testimonial-group > .row {
+.main {
     overflow-x: auto;
+}
+.testimonial-group {
+    min-width: 450px;
+}
+.testimonial-group > .row {
     white-space: nowrap;
 }
 .testimonial-group > .row > .col-xs-4 {
     display: inline-block;
     float: none;
+}
+#cartRows {
+
 }

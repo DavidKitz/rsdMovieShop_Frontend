@@ -4,6 +4,11 @@ import loadUserData from "./service/loadUserData.js";
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
 const movieTable = document.getElementById("userTable");
+const validateEmail = (email) => {
+    return email.match(
+        /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
 let username = "";
 
 //CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
@@ -119,7 +124,12 @@ async function updateUser(userRow) {
     let username = userRow.parentElement.parentElement.getElementsByTagName("td")[1].innerHTML;
     requestBody.firstName = userRow.parentElement.parentElement.getElementsByTagName("td")[2].innerHTML;
     requestBody.lastName = userRow.parentElement.parentElement.getElementsByTagName("td")[3].innerHTML;
-    requestBody.email = userRow.parentElement.parentElement.getElementsByTagName("td")[4].innerHTML;
+    console.log(validateEmail(userRow.parentElement.parentElement.getElementsByTagName("td")[4].innerText))
+    if(validateEmail(userRow.parentElement.parentElement.getElementsByTagName("td")[4].innerText.replace(/\s/g, "")) == null) {
+        alert("Please Enter a valid Email!");
+        return;
+    }
+    requestBody.email = userRow.parentElement.parentElement.getElementsByTagName("td")[4].innerText;
     requestBody.role = userRow.parentElement.parentElement.getElementsByTagName("td")[5].innerText;
     let stringValue = userRow.parentElement.parentElement.getElementsByTagName("td")[6].childNodes[0].checked;
     requestBody.enabled = JSON.parse(stringValue);

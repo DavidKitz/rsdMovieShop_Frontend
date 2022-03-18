@@ -56,7 +56,8 @@ async function submitMovie(e,form) {
     const response = await myFetchService.performHttpPostRequestWithBody("http://localhost:8080/api/admin/addMovie", headers, requestBody);
 
     if(response.status === 200) {
-        alert("MOVIE SUCCESSFULLY ADDED TO DB")
+        formItem.reset();
+        alert("MOVIE SUCCESSFULLY ADDED TO DB");
     }
 }
 
