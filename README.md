@@ -14,7 +14,7 @@ umgesetzt werden.
 Die Verwendung von CMS o.Ä. ist dabei untersagt.
 
 
-#### umgesetzt von Team RSD
+#### umgesetzt von Team K
   👉 Abdulhadi Rajeh  
   👉 Kitz David  
   👉 Sheikh Salim
