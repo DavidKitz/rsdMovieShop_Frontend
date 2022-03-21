@@ -41,7 +41,7 @@ export default class loadUserData {
                 liElement.classList.add("nav-item","dropdown");
                 const aElement = document.createElement("a");
                 aElement.classList.add("nav-link","dropdown-toggle");
-                this.setMultipleAttributes(aElement,{"id" :"navbarDropdown","role":"button","data-toggle":"dropdown",
+                this.setMultipleAttributes(aElement,{"id" :"navbarDropdown","role":"button","data-bs-toggle":"dropdown",
                     "aria-haspopup":"true", "aria-expanded":"false"});
                 aElement.innerHTML = "Admin-routes";
                 liElement.append(aElement);
