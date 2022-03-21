@@ -16,7 +16,10 @@
 <!-- navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
-				<a class="navbar-brand" href="./index.html">MovieShop</a>
+				<a class="navbar-brand" href="./index.html">
+						<img src="./style/RSD_logo_movieclapper.png" alt="" width="60" height="60">
+						MovieShop
+				</a>
 				<button
 					class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07"
 					aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,48 +44,46 @@
 						Help / FAQs
 				</h1>
 		</div>
-
+		
 		<div class="container text-center w-50">
 				<br>
-				<!-- Accordion -->
-				<div class="container accordion" id="accordionExample">
-
-						<div class="card my-3">
-								<div class="card-header" id="heading1">
-										<h2 class="mb-0">
-												<button
-													class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-													data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
-														What is MovieShop about?
-												</button>
-										</h2>
-								</div>
-								<div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionExample">
-										<div class="card-body mx-3">
+				<div class="accordion" id="accordionExample">
+						<div class="accordion-item my-2">
+								<h2 class="accordion-header" id="headingOne">
+										<button
+											class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+												What is MovieShop about?
+										</button>
+								</h2>
+								<div
+									id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+									data-bs-parent="#accordionExample">
+										<div class="accordion-body">
 												Welcome, friend!<br>
 												You have finally reached your <b>Prime</b> destination:<br>
 												the ultimate one-stop-shop to satisfy all your <b>cineastic cravings</b>.<br>
-												Just like you, <abbr title="David, Rajeh & Salim">we</abbr> are a bunch of movie fiends always looking for
-												our <b><s>Netflix</s></b> next fix.<br><br>
-												Since none of the <abbr title="Current Content Providers">CCP</abbr> could keep up with our need for constant
-												reality escape, we saw the need to create our own <abbr title="Movie Delivery System">MDS</abbr>...<br>
-												and thus, <strong>RSD  MovieShop</strong> was born!
+												Just like you, <abbr title="David, Rajeh & Salim">we</abbr> are a bunch of movie fiends
+												always looking for our <b><s>Netflix</s></b> next fix.<br><br>
+												Since none of the <abbr title="Current Content Providers">CCP</abbr> could keep up with
+												our need for constant reality escape, we saw the need to create our
+												own <abbr title="Movie Delivery System">MDS</abbr>...<br>
+												and thus, <strong>RSD MovieShop</strong> was born!
 										</div>
 								</div>
 						</div>
-
-						<div class="card my-3">
-								<div class="card-header" id="heading2">
-										<h2 class="mb-0">
-												<button
-													class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-													data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
-														Okay, I'm convinced. How do I use MovieShop?
-												</button>
-										</h2>
-								</div>
-								<div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionExample">
-										<div class="card-body mx-3">
+						<div class="accordion-item my-2">
+								<h2 class="accordion-header" id="headingTwo">
+										<button
+											class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+												Okay, I'm convinced. How do I use MovieShop?
+										</button>
+								</h2>
+								<div
+									id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+									data-bs-parent="#accordionExample">
+										<div class="accordion-body">
 												To start your cinematic journey with us, please <a href="./CreateAccount.html">click here</a>
 												first to create a new user account. After you have successfully registered,
 												you can browse our massive catalogue and choose from a huge variety of movies
@@ -90,19 +91,18 @@
 										</div>
 								</div>
 						</div>
-
-						<div class="card my-3">
-								<div class="card-header" id="heading3">
-										<h2 class="mb-0">
-												<button
-													class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-													data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
-														Great, how do I place orders? When will they arrive?
-												</button>
-										</h2>
-								</div>
-								<div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionExample">
-										<div class="card-body mx-3">
+						<div class="accordion-item my-2">
+								<h2 class="accordion-header" id="headingThree">
+										<button
+											class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+												Great, how do I place orders? When will they arrive?
+										</button>
+								</h2>
+								<div
+									id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+									data-bs-parent="#accordionExample">
+										<div class="accordion-body">
 												Once you've found the movie(s) of your choice <a href="movies.html">here</a>, please add them
 												to your shopping cart using the designated [Add to Cart] button. You will automatically be
 												forwarded to your own personal Shopping Cart.<br><br>
@@ -119,22 +119,21 @@
 										</div>
 								</div>
 						</div>
-
-						<div class="card my-3">
-								<div class="card-header" id="heading4">
-										<h2 class="mb-0">
-												<button
-													class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-													data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
-														My chosen movie is out of stock! What do I do?
-												</button>
-										</h2>
-								</div>
-								<div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
-										<div class="card-body">
+						<div class="accordion-item my-2">
+								<h2 class="accordion-header" id="headingFour">
+										<button
+											class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+												My chosen movie is out of stock! What do I do?
+										</button>
+								</h2>
+								<div
+									id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+									data-bs-parent="#accordionExample">
+										<div class="accordion-body">
 												In the event of such rare cases, it is very important to <b>remain calm</b>.<br>
-												Please contact our support,
-												and our highly trained staff will take care of your emergency right away!
+												Please contact our support, and our highly trained staff will
+												take care of your emergency right away!
 										</div>
 								</div>
 						</div>
