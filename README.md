@@ -12,7 +12,7 @@ Im Projekt soll das Frontend für einen Webshop mit Hilfe von
 
 umgesetzt werden.
 
-Die Verwendung von CMS o.Ä. ist dabei untersagt.
+**Die Verwendung von CMS o.Ä. ist dabei untersagt.**
 
 ## Hinweis zur Verwendung
 Nach dem korrekten Import der Datenbank und Start des Backends bitte per WebStorm die [index.html](view/index.html) aufrufen, um den Webshop zu starten.
