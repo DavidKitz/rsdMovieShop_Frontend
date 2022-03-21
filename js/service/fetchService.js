@@ -8,10 +8,26 @@ export default class fetchService {
             const response = await fetch(apiUrl, {
                 method: "POST",
                 headers: headers,
+                credentials:"include",
                 body: JSON.stringify(body)
             });
-            const content = await response.json();
-            alert('User account created!');
+            const content = await response;
+            return content;
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    async performHttpPostRequestForFileUpload(apiUrl,headers, body) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: "POST",
+                headers: headers,
+                credentials:"include",
+                body: body,
+                mode:'no-cors'
+            });
+            const content = await response;
             return content;
         } catch(err) {
             throw err;
@@ -98,9 +114,25 @@ export default class fetchService {
                 mode: 'cors',
                 body: JSON.stringify(body),
 
-
             })
             const content = await response;
+            return content;
+        } catch(err) {
+            alert("Something went wrong! Try again!");
+            throw err;
+
+        }
+    }
+    async getMovieDetailById(movieId,headers) {
+        try {
+            const response = await fetch("http://localhost:8080/api/movies/"+movieId, {
+                method: "GET",
+                headers: headers,
+                credentials: "include",
+                mode: 'cors',
+
+            })
+            const content = await response.json();
             return content;
         } catch(err) {
             alert("Something went wrong! Try again!");

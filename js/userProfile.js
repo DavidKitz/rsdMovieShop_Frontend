@@ -3,53 +3,117 @@ import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
 const myUserData = new loadUserData();
-const adminHref = document.getElementById("adminLink");
-const adminHref2 = document.getElementById("adminLink2");
-const logout = document.getElementById("logout");
 let username = "";
-//ENABLE ROUTES FOR USER
-myUserData.checkForUserCookie();
 
-//CHECK IF USER IS ADMIN AS WELL AND ENABLE ROUTES FOR ADMIN IF SO
-const permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/"+ username);
 
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
-    permission.then(response => {
-        if (response["role"].includes("ROLE_ADMIN")) {
-            adminHref.style.visibility = "visible";
-            adminHref2.style.visibility = "visible";
-        } else {
-            adminHref.style.visibility = "hidden";
-            adminHref2.style.visibility = "hidden";
+//CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
+async function checkPermission() {
+    if ((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if (permission.status == 404) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
         }
-    })
-}
-
-//ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    logoutUser(e);}
-);
-async function logoutUser(e) {
-    e.preventDefault();
-    const headers = buildHeaders();
-    const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
-    if(response.status == 200) {
-        alert("Successful logout!");
-        sessionStorage.clear();
+        if(permission.status == 401) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+        const getUserCart = await myFetchService.findAllMovies("http://localhost:8080/api/user/username/" + sessionStorage.getItem("username"));
+        sessionStorage.setItem("userCartId", getUserCart["cart"]["cartId"]);
+    } else {
         window.location.href = "../view/index.html";
     }
-
 }
-function buildHeaders(authorization = null) {
-    const headers = {
-        "Content-Type": "application/json",
-    };
-    return headers;
+checkPermission();
+
+
+async function getUserData() {
+    try {
+        const response = await fetch("http://localhost:8080/api/user/username/" + username, {
+            method: "GET",
+            headers: myUserData.buildHeader(),
+            credentials: "include",
+            mode: 'cors',
+        })
+         const content = await response.json();
+        return content;
+    } catch (err) {
+        throw err;
+    }
 }
 
+async function mappingUserData() {
+    const response = await getUserData();
+    let firstName = response["firstName"];
+    let lastName = response["lastName"];
+    let email = response["email"];
+    let username = sessionStorage.getItem("username");
+    let shippingAddress = response["shippingAddress"];
+    let id = response["id"];
+    let picture = "https://www.cag-acg.org/images/quality/usericon-200px.png";
+    if (response["picture"] != null) {
+        picture ="http://localhost:8080/api/user/" + username + "/userImg/" + id
+    }
 
-//TODO: GET ALL USER DATA FROM BACKEND AND FILL CURRENT FORM WITH DATA
 
-//TODO: GIVE THE OPTION TO UPDATE USER DATA WITH THE SAVE BUTTON - CALL BACKEND ROUTE TO UPDATE USER (EXCEPT ROLE)
+    document.getElementById("firstName").value = firstName
+    document.getElementById("lastName").value = lastName
+    document.getElementById("email").value = email
+    document.getElementById("username").value = username
+    document.getElementById("shippingAddress").value = shippingAddress
+    document.getElementById("profilePic").src = picture
+}
+
+async function updateUserData() {
+    const username = sessionStorage.getItem("username");
+    let requestBody = {};
+    requestBody.username = username;
+    requestBody.firstName = document.getElementById("firstName").value
+    requestBody.lastName = document.getElementById("lastName").value
+    requestBody.email = document.getElementById("email").value
+    requestBody.shippingAddress = document.getElementById("shippingAddress").value
+    requestBody.picture = await updatePic();
+
+    const headers = await myUserData.buildHeader();
+    const response = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/" + username, headers, requestBody);
+
+    if (response.status == 200) {
+        window.alert("User Data updated!")
+    } else {
+        alert("Something went wrong!")
+    }
+}
+
+async function updatePic() {
+    const response = await getUserData();
+    let selectedFile = document.getElementById("updateProfilePic").files[0];
+    let img = document.getElementById("profilePic");
+
+    if (selectedFile != null) {
+        let reader = new FileReader();
+        reader.onload = async function () {
+            img.src = reader.result;
+
+            let formData = new FormData();
+            formData.append('file', selectedFile);
+
+            let headers = myUserData.buildHeadersForFileUpload();
+
+            await myFetchService.performHttpPostRequestForFileUpload("http://localhost:8080/api/user/" + username +
+                "/img/" + response["id"], headers, formData)
+        }
+        reader.readAsDataURL(selectedFile)
+    }
+}
+
+document.getElementById("updateProfilePic").addEventListener('change', (event) => {
+    event.preventDefault();
+    updatePic().then();
+})
+
+document.getElementById("updateData").addEventListener('click', (event) => {
+    event.preventDefault();
+    updateUserData()
+});
+window.onload = mappingUserData();

@@ -3,16 +3,16 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <title>Movies - RSD MovieShop</title>
+    <meta name="description" content="User Profile Page - Movies Shop.">
+    <title>ShoppingCart - RSD MovieShop</title>
     <link rel="stylesheet" href="./style/MovieShop.css">
     <script src="https://kit.fontawesome.com/fa6afee77d.js" crossorigin="anonymous"></script>
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
 </head>
 <body>
-
+<script src="../js/permissionCheck.js"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="./index.html">MovieShop</a>
@@ -31,27 +31,28 @@
         </div>
     </div>
 </nav>
-<div class="container">
+<div class="main">
+    <div id="cartOverview" class="container rounded bg-dark mt-5 mb-5 testimonial-group" >
+            <div id="cartRows" class="row" >
 
-    <select class="form-select form-select-sm" id="dropdownHandler">
-        <option value="Show All">Show All</option>
-        <option value="Action">Action</option>
-        <option value="Adventure">Adventure</option>
-				<option value="Animation">Animation</option>
-				<option value="Biography">Biography</option>
-				<option value="Comedy">Comedy</option>
-				<option value="Crime">Crime</option>
-        <option value="Drama">Drama</option>
-				<option value="Fantasy">Fantasy</option>
-				<option value="History">History</option>
-				<option value="Horror">Horror</option>
-				<option value="Musical">Musical</option>
-				<option value="Mystery">Mystery</option>
-        <option value="Romance">Romance</option>
-        <option value="Thriller">Thriller</option>
-    </select>
+                    <h2>YOUR SHOPPING CART </h2>
 
-    <div class=" col-md-12 col-sm-12 col-xs-12" id="collectAllMovies"></div>
+                </div>
+        <div  class="row">
+                <hr class="hrColor">
+
+                <div class="toWhite spaceRight" >
+                    <div  id = "totalValue" class="total-amount floatRight marginLeft innerSpaceTop">$0</div>
+                    <div class="Subtotal floatRight innerSpaceTop">Sub-Total</div>
+
+                </div>
+                <div class="mb-4">
+                    <button id="purchaseButton" class="btn-success rounded shopCartColor innerSpaceTop floatRight spaceTop">Purchase</button>
+                    <button id="continueShopping" class="btn-primary rounded shopCartColor innerSpaceTop floatRight spaceTop">Continue Shopping</button>
+
+                </div>
+        </div>
+    </div>
 </div>
 
 <footer class="footer mt-auto py-3 bg-dark fixed-bottom">
@@ -62,7 +63,8 @@
 				</span>
     </div>
 </footer>
-<script type="module" src="../js/movies.js"></script>
+
+<script type="module" src="../js/shoppingCart.js"></script>
 <script
         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

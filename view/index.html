@@ -3,8 +3,9 @@
 <head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta charset="UTF-8">
-		<title>Home</title>
+		<title>Welcome to RSD MovieShop</title>
 		<link rel="stylesheet" href="./style/MovieShop.css">
+		<script src="https://kit.fontawesome.com/fa6afee77d.js" crossorigin="anonymous"></script>
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
 			integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
@@ -19,53 +20,27 @@
 			<span class="navbar-toggler-icon"></span>
 		</button>
 		<div class="navbar-collapse collapse" id="navbarsExample07" >
-			<ul class="navbar-nav mr-auto">
+			<ul id="defaultUl" class="navbar-nav mr-auto">
 				<li class="nav-item active">
 					<a class="nav-link" href="./movies.html">Movies<span class="sr-only"></span></a>
 				</li>
-
-				<li class="nav-item">
-					<a id="registerHref" class="nav-link" href="CreateAccount.html">Register</a>
-				</li>
-				<li class="nav-item">
-					<a id="loginHref" class="nav-link" href="login.html">Login</a>
-				</li>
 			</ul>
-
 			<ul id = "userAndLogout" class="navbar-nav ms-auto">
-				<li id="adminLink" class="nav-item">
-					<a  class="nav-link" href="adminAddProducts.html">(admin) Add Movies</a>
-				</li>
-				<li id="adminLink2" class="nav-item">
-					<a  class="nav-link" href="manageProducts.html">(admin) Manage Movies</a>
-				</li>
-				<li  class="nav-item">
-					<a id="userLink" class="nav-link" href="userProfile.html"></a>
-				</li>
-				<li  class="nav-item">
-					<a id="logout" class="nav-link" href="">Logout</a>
-				</li>
+
 			</ul>
 		</div>
 	</div>
 </nav>
 <div class="container">
-	<div class="addMarginBot">
-			<h2>Shop for your favourite movies </h2>
-			<form id="sendForm" action="">
-					<input type="text" placeholder="Search for a Movie">
-					<input type="submit" name="Search">
-			</form>
 
-	</div>
 	<div class=" col-md-12 col-sm-12 col-xs-12" id="searchResult"></div>
 </div>
 
 <footer class="footer mt-auto py-3 bg-dark fixed-bottom">
 		<div class="">
 				<span class="text-muted">
-						<a href="./impressum.html">Impressum</a>
-						<a href="./hilfe.html">Hilfe/FAQs</a>
+						<a href="./impressum.html">Legal Notice</a>
+						<a href="./hilfe.html">Help/FAQs</a>
 				</span>
 		</div>
 </footer>

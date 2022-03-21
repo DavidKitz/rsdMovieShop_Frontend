@@ -3,15 +3,17 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <title>Home</title>
+    <meta name="description" content="User Profile Page - Movies Shop.">
+    <title>Your Profile - RSD MovieShop</title>
     <link rel="stylesheet" href="./style/MovieShop.css">
+    <script src="https://kit.fontawesome.com/fa6afee77d.js" crossorigin="anonymous"></script>
     <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
 </head>
 <body>
-
+<script src="../js/permissionCheck.js"></script>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="./index.html">MovieShop</a>
@@ -19,74 +21,73 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="navbar-collapse collapse" id="navbarsExample07" >
-            <ul class="navbar-nav mr-auto">
+            <ul id="defaultUl" class="navbar-nav mr-auto">
                 <li class="nav-item active">
                     <a class="nav-link" href="./movies.html">Movies<span class="sr-only"></span></a>
                 </li>
-
-                <li class="nav-item">
-                    <a id="registerHref" class="nav-link" href="CreateAccount.html">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a id="loginHref" class="nav-link" href="login.html">Login</a>
-                </li>
             </ul>
-
             <ul id = "userAndLogout" class="navbar-nav ms-auto">
-                <li id="adminLink" class="nav-item">
-                    <a  class="nav-link" href="adminAddProducts.html">(admin) Add Movies</a>
-                </li>
-                <li id="adminLink2" class="nav-item">
-                    <a  class="nav-link" href="manageProducts.html">(admin) Manage Movies</a>
-                </li>
-                <li  class="nav-item">
-                    <a id="userLink" class="nav-link" href="userProfile.html"></a>
-                </li>
-                <li  class="nav-item">
-                    <a id="logout" class="nav-link" href="">Logout</a>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container rounded bg-dark mt-5 mb-5">
-    <div class="row">
-        <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-3"><img class="rounded-circle mt-5" width="200px" height="200px" src="https://www.cag-acg.org/images/quality/usericon-200px.png"><span class="font-weight-bold">Edogaru</span><span class="text-white-50">test@gmail.com</span><span> </span></div>
+    <div class="row justify-content-md-center">
+        <div class="col-md-3 border-right ">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-3">
+                <img id="profilePic" class="rounded-circle mt-5"
+                     width="200px" height="200px"
+                     src="https://www.cag-acg.org/images/quality/usericon-200px.png" alt="user Profile Image"><span
+                    class="font-weight-bold">Edogaru</span></div>
+            <div>
+                <form id="imgForm">
+                <input type="file" name="file" class="form-control form-control-md" accept="image/jpeg, image/png, image/jpg" id="updateProfilePic"/>
+                </form>
+            </div>
         </div>
-        <div class="col-md-5 border-right">
-            <div class="p-3 py-5">
+        <div class="col-md-5">
+            <div class="p-5 py-4">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <h4 class="text-right toWhite">Profile Settings</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="labels">Name</label>
+                        <input id="firstName" type="text" class="form-control" placeholder="first name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastName" class="labels">Surname</label>
+                        <input id="lastName" type="text" class="form-control" placeholder="surname"></div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Username</label><input type="text" class="form-control" placeholder="" value="username"></div>
-                    <div class="col-md-12"><label class="labels">Email</label><input type="text" class="form-control" placeholder="email" value=""></div>
-                    <div class="col-md-12"><label class="labels">Role</label><input type="text" class="form-control" placeholder="role" value="" readonly></div>
+                    <div class="col-md-12">
+                        <label for="username" class="labels">Username</label>
+                        <input id="username" type="text" class="form-control" placeholder="username" disabled>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="email" class="labels">Email</label>
+                        <input id="email" type="text"  class="form-control" placeholder="email"></div>
 
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                <div class="col-md-12">
+                    <label for="shippingAddress" class="labels">Address</label>
+                    <input id="shippingAddress" type="text" class="form-control" placeholder="Address"></div>
+                <div class="py-4 pe-3 px-2   col-sm-10 offset-sm-4" >
+                    <button id="updateData" class="btn btn-outline-dark btn-primary" type="submit">Save Profile</button>
                 </div>
-                <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
-            </div>
+                </div>
+
         </div>
 
     </div>
-</div>
-</div>
+
 </div>
 
 <footer class="footer mt-auto py-3 bg-dark fixed-bottom">
     <div class="">
 				<span class="text-muted">
-						<a href="./impressum.html">Impressum</a>
-						<a href="./hilfe.html">Hilfe/FAQs</a>
+						<a href="./impressum.html">Legal Notice</a>
+						<a href="./hilfe.html">Help/FAQs</a>
 				</span>
     </div>
 </footer>

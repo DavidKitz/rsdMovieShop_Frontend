@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="./style/MovieShop.css">
+		<script src="https://kit.fontawesome.com/fa6afee77d.js" crossorigin="anonymous"></script>
 		<link
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
 			integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -11,111 +13,149 @@
 			src="https://code.jquery.com/jquery-3.6.0.js"
 			integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
 			crossorigin="anonymous"></script>
-		<title>Hilfe/FAQs</title>
-
+		<title>Help/FAQs - RSD MovieShop</title>
 </head>
+
 <body>
 
+<!-- navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
 				<a class="navbar-brand" href="./index.html">MovieShop</a>
-				<button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+				<button
+					class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarsExample07"
+					aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 				</button>
-
 				<div class="navbar-collapse collapse" id="navbarsExample07">
-						<ul class="navbar-nav mr-auto">
+						<ul id="defaultUl" class="navbar-nav mr-auto">
 								<li class="nav-item active">
-										<a class="nav-link" href="./index.html">Home<span class="sr-only"></span></a>
+										<a class="nav-link" href="./movies.html">Movies<span class="sr-only"></span></a>
 								</li>
-								<li class="nav-item">
-										<a class="nav-link" href="login.html">Login</a>
-								</li>
-								<li class="nav-item">
-										<a class="nav-link" href="CreateAccount.html">Register</a>
-								</li>
+						</ul>
+						<ul id="userAndLogout" class="navbar-nav ms-auto">
+						
 						</ul>
 				</div>
 		</div>
 </nav>
 
-<div class="container min-vh-100"><br>
-<div class="container toWhite elementCenterAndItalic" >
-		<h1>
-				Hilfe / FAQs
-		</h1>
-</div>
-<div class="container"><br>
-<!-- Accordion -->
-<div class="container accordion" id="accordionExample">
-		<div class="card">
-				<div class="card-header" id="headingOne">
-						<h2 class="mb-0">
-								<button
-									class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
-									data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-									How do I cancel or change my order?
-								</button>
-						</h2>
-				</div>
-				
-				<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-						<div class="card-body">
-							We are not able to make any changes to an order or cancel it once it has been placed.
-							We include pre-paid return labels in all orders placed within Austria,
-							and we’re happy to assist you with returning an order once you receive it.
+<div class="container min-vh-100">
+		<div class="container text-white text-center"><br>
+				<h1>
+						Help / FAQs
+				</h1>
+		</div>
 
+		<div class="container text-center w-50">
+				<br>
+				<!-- Accordion -->
+				<div class="container accordion" id="accordionExample">
+
+						<div class="card my-3">
+								<div class="card-header" id="heading1">
+										<h2 class="mb-0">
+												<button
+													class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+													data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+														What is MovieShop about?
+												</button>
+										</h2>
+								</div>
+								<div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionExample">
+										<div class="card-body mx-3">
+												Welcome, friend!<br>
+												You have finally reached your <b>Prime</b> destination:<br>
+												the ultimate one-stop-shop to satisfy all your <b>cineastic cravings</b>.<br>
+												Just like you, <abbr title="David, Rajeh & Salim">we</abbr> are a bunch of movie fiends always looking for
+												our <b><s>Netflix</s></b> next fix.<br><br>
+												Since none of the <abbr title="Current Content Providers">CCP</abbr> could keep up with our need for constant
+												reality escape, we saw the need to create our own <abbr title="Movie Delivery System">MDS</abbr>...<br>
+												and thus, <strong>RSD  MovieShop</strong> was born!
+										</div>
+								</div>
+						</div>
+
+						<div class="card my-3">
+								<div class="card-header" id="heading2">
+										<h2 class="mb-0">
+												<button
+													class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+													data-target="#collapse2" aria-expanded="true" aria-controls="collapse2">
+														Okay, I'm convinced. How do I use MovieShop?
+												</button>
+										</h2>
+								</div>
+								<div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionExample">
+										<div class="card-body mx-3">
+												To start your cinematic journey with us, please <a href="./CreateAccount.html">click here</a>
+												first to create a new user account. After you have successfully registered,
+												you can browse our massive catalogue and choose from a huge variety of movies
+												to escape reality in the comfort of your home.
+										</div>
+								</div>
+						</div>
+
+						<div class="card my-3">
+								<div class="card-header" id="heading3">
+										<h2 class="mb-0">
+												<button
+													class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+													data-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+														Great, how do I place orders? When will they arrive?
+												</button>
+										</h2>
+								</div>
+								<div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionExample">
+										<div class="card-body mx-3">
+												Once you've found the movie(s) of your choice <a href="movies.html">here</a>, please add them
+												to your shopping cart using the designated [Add to Cart] button. You will automatically be
+												forwarded to your own personal Shopping Cart.<br><br>
+												Inside your Shopping Cart, you can change the amount per movie you want to order (why not
+												order a duplicate for your friend?), or remove the movie from your cart altogether (but
+												really, why would you want to do that?).<br><br>
+												From there, you can either [Continue Shopping] or complete your order by
+												clicking the [Purchase] button.<br><br>
+												Our highly sophisticated payment system will then automatically deduct the total amount of your
+												order from your <abbr title="Human Net Worth">HNW</abbr>.<br><br>
+												Once your payment has cleared, the movie will start playing inside your brain wherever you are.
+												<br>
+												It's as easy as ABC (actually, even easier)!
+										</div>
+								</div>
+						</div>
+
+						<div class="card my-3">
+								<div class="card-header" id="heading4">
+										<h2 class="mb-0">
+												<button
+													class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+													data-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
+														My chosen movie is out of stock! What do I do?
+												</button>
+										</h2>
+								</div>
+								<div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+										<div class="card-body">
+												In the event of such rare cases, it is very important to <b>remain calm</b>.<br>
+												Please contact our support,
+												and our highly trained staff will take care of your emergency right away!
+										</div>
+								</div>
 						</div>
 				</div>
 		</div>
-		<div class="card">
-				<div class="card-header" id="headingTwo">
-						<h2 class="mb-0">
-								<button
-									class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-									data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-									When will my order ship?
-								</button>
-						</h2>
-				</div>
-				<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-						<div class="card-body">
-							All orders ship within 2-3 business days from the date of your order confirmation.
-						</div>
-				</div>
-		</div>
-		<div class="card">
-				<div class="card-header" id="headingThree">
-						<h2 class="mb-0">
-								<button
-									class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
-									data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-									Out of Stock!
-								</button>
-						</h2>
-				</div>
-				<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-						<div class="card-body">
-							While we do our best to make sure our website reflects exactly what’s stored in our inventory,
-							please note that updates may be delayed during special events, such as End of Season Sale,
-							Online Sample Sale or any other promotional sales. If you’d like to confirm whether a specific item is available,
-							or if it will be restocked, please contact our Customer Service team—they’re happy to help!
-						</div>
-				</div>
-		</div>
-</div>
-	</div>
 </div>
 
 <footer class="footer mt-auto py-3 bg-dark fixed-bottom">
 		<div class="container">
 				<span class="text-muted">
-						<a href="./impressum.html">Impressum</a>
-						<a href="./hilfe.html">Hilfe/FAQs</a>
+						<a href="./impressum.html">Legal Notice</a>
+						<a href="./hilfe.html">Help/FAQs</a>
 				</span>
 		</div>
 </footer>
-
+<script type="module" src="../js/hilfe.js"></script>
 <script
 	src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
 	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

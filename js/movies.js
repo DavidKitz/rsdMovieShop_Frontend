@@ -3,44 +3,34 @@ import loadUserData from "./service/loadUserData.js";
 
 const myFetchService = new fetchService();
 const movieDiv = document.getElementById("collectAllMovies");
-const adminHref = document.getElementById("adminLink");
-const adminHref2 = document.getElementById("adminLink2");
 const logout = document.getElementById("logout");
+const movieOptions = document.getElementById("dropdownHandler");
 const myUserData = new loadUserData();
 let username = "";
+
+movieOptions.addEventListener("change",function(e) {
+    movieFilter(this);
+});
 //CHECK IF USER IS LOGGED IN AND ENABLE ROUTE IF SO
-myUserData.checkForUserCookie();
-
-//CHECK IF USER IS ALSO OF ROLE ADMIN AND ENABLE ROUTE IF SO
-if((username = sessionStorage.getItem("username")) !== null) {
-    let permission = myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
-
-    permission.then(response => {
-        if (response["role"].includes("ROLE_ADMIN")) {
-            adminHref.style.visibility = "visible";
-            adminHref2.style.visibility = "visible";
-        } else {
-            adminHref.style.visibility = "hidden";
-            adminHref2.style.visibility = "hidden";
+async function checkPermission() {
+    if((username = sessionStorage.getItem("username")) !== null) {
+        let permission = await myUserData.checkForPermission("http://localhost:8080/api/user/username/" + username);
+        if(permission.status == 404) {
+            myUserData.buildDefaultNav();
+            sessionStorage.clear();
+            return;
         }
-    })
-}
-
-//ADD EVENTLISTENER TO LOGOUT
-logout.addEventListener("click", function(e) {
-    logoutUser(e);}
-);
-async function logoutUser(e) {
-    e.preventDefault();
-    const headers = buildHeaders();
-    const response = await myFetchService.performLogout("http://localhost:8080/logout",headers);
-    if(response.status == 200) {
-        alert("Successful logout!");
-        sessionStorage.clear();
-        window.location.href = "../view/index.html";
+        if(permission.status == 401) {
+            sessionStorage.clear();
+            window.location.href = "../view/index.html";
+        }
+        let buildData = await myUserData.buildNavBasedOnPermission(permission);
+    } else {
+        myUserData.buildDefaultNav();
     }
-
 }
+
+checkPermission();
 
 async function movieDbCall() {
     const headers = {
@@ -51,11 +41,43 @@ async function movieDbCall() {
     response.forEach(element => {
         const img = document.createElement("img");
         const div = document.createElement("div");
-        div.classList.add("custom-div");
+        myUserData.setMultipleAttributes(div,{class : "custom-div " + element.genres.toString()})
+        div.id = element["movieId"];
         img.src = element["movieUrl"]
         div.append(img);
+        div.addEventListener("click", function(e) {
+            openMovieDetails(e,this);
+        })
         movieDiv.append(div);
     })
 
 }
+async function movieFilter(optionSelected) {
+        clearMovies();
+        movieDbCall().then(() => {
+        let selectedGenre = optionSelected.value;
+        let arr = [...movieDiv.childNodes];
+        arr.forEach(item => {
+            console.log(item)
+            if(!item.className.includes(selectedGenre) && selectedGenre != "Show All") {
+                item.remove();
+            }
+        })
+    })
+
+}
+async function clearMovies() {
+    let arr = [...movieDiv.childNodes];
+    arr.forEach(item =>  {
+        console.log(item);
+        item.remove()
+    });
+}
+
+function openMovieDetails(e,element) {
+    e.preventDefault();
+    sessionStorage.setItem('movieDetailsId', element.id);
+    window.location.href = "../view/movieDetails.html";
+}
 movieDbCall();
+
