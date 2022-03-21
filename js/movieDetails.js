@@ -26,7 +26,12 @@ async function checkPermission() {
         window.location.href = "../view/index.html";
     }
 }
-checkPermission();
+if(sessionStorage.getItem("username")) {
+    checkPermission();
+} else {
+    myUserData.buildDefaultNav();
+}
+
 
 cartButton.addEventListener("click", function(e) {
     addItemToCart(e,this);
