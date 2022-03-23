@@ -21,7 +21,7 @@ html, body {
 }
 
 body {
-    background-image: url("background.jpg");
+    background-image: url("background_optimized.webp");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
