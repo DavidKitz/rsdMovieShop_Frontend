@@ -43,13 +43,14 @@ async function addItemToCart(e) {
         alert("You have to log in, or create an account to add items to the cart!")
         return null;
     }
-    let body = {"movieID" : sessionStorage.getItem("movieDetailsId"),
-        "quantity" : 1}
-
     const headers = await myUserData.buildHeader();
+    let body = {}
+
+
 
     const movieDetails = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/"
-        +sessionStorage.getItem("username")+"/cart/"+sessionStorage.getItem("userCartId"),headers,body);
+        +sessionStorage.getItem("username")+"/cart/"+sessionStorage.getItem("userCartId")+"/movieId/"+
+        sessionStorage.getItem("movieDetailsId"),headers,body);
     if(movieDetails.status == 200) {
         window.location.href = "../view/ShoppingCart.html";
     }
