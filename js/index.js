@@ -54,4 +54,4 @@ async function imdbApiCall() {
     }
 
 }
-//imdbApiCall();
+imdbApiCall();
