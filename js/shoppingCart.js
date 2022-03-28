@@ -122,7 +122,7 @@ async function buildShoppingCart() {
         div.append(divPrices);
 
         parentDiv.append(div);
-        let fixedSum = sum.toFixed(2)
+        let fixedSum = sum.toFixed(2);
         totalValue.innerHTML = "$ " + fixedSum;
         }
     )

@@ -43,7 +43,7 @@ async function loadOrderData() {
         cell1.innerHTML = element["orderId"]
         cell2.innerHTML = element["userId"];
         cell3.innerHTML = element["orderStatus"];
-        cell4.innerHTML = element["totalPrice"] + " $";
+        cell4.innerHTML = element["totalPrice"].toFixed(2) + " $";
 
         //Add dropdown for Order-Status options
         cell3.classList.add("dropdown-toggle");
