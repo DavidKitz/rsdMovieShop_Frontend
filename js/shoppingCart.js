@@ -77,7 +77,6 @@ async function buildShoppingCart() {
         divImage.append(img);
         div.append(divImage);
 
-        console.log(responseMovieCall);
         divAbout.classList.add("newClass");
         divAbout.style.height = "250 px";
         h4.classList.add('"title"');
@@ -91,14 +90,15 @@ async function buildShoppingCart() {
 
         divIncrease.innerHTML = "+";
         divIncrease.classList.add("addHoverMouse");
-        divIncrease.addEventListener("click", function() {
+        divIncrease.addEventListener("click", async function() {
             incrementNbr(item["cartItemID"],responseMovieCall);
         })
         divCount.innerHTML = item["amount"];
         divCount.setAttribute("class",item["cartItemID"]);
+        divCount.setAttribute("id",responseMovieCall["movieId"]);
         divDecrease.innerHTML = "-";
         divDecrease.classList.add("addHoverMouse");
-        divDecrease.addEventListener("click", function () {
+        divDecrease.addEventListener("click", async function () {
             decrementNbr(this,item["cartItemID"],responseMovieCall["price"]);
         })
         divCounter.append(divIncrease);
@@ -110,6 +110,7 @@ async function buildShoppingCart() {
         divPrice.innerHTML = "$" + responseMovieCall["price"];
         //Add price to total Sum
         sum += item["amount"] * responseMovieCall["price"];
+        sum.toFixed(2);
         divRemove.innerHTML = "<u>Remove</u>";
         divRemove.addEventListener("click",async function() {
             removeCartItem(this,item["cartItemID"]);
@@ -121,8 +122,8 @@ async function buildShoppingCart() {
         div.append(divPrices);
 
         parentDiv.append(div);
-
-        totalValue.innerHTML = "$ " + sum;
+        let fixedSum = sum.toFixed(2)
+        totalValue.innerHTML = "$ " + fixedSum;
         }
     )
 
@@ -151,19 +152,28 @@ async function removeCartItem(removeDiv,cartItemId) {
         alert("Something went wrong!");
     }
 }
-function incrementNbr(cartItemId,movie) {
+async function incrementNbr(cartItemId,movie) {
     //Check if current Stock is not lower than count in Cart
-    if(movie["amountInStock"] <= document.getElementsByClassName(cartItemId)[0].innerHTML) {
+    let divCount = document.getElementsByClassName(cartItemId)[0];
+    console.log(divCount.innerHTML)
+    if(movie["amountInStock"] <= divCount.innerHTML) {
         alert("Not enough movies in Stock!");
         return null;
     }
-    ++document.getElementsByClassName(cartItemId)[0].innerHTML;
+    ++divCount.innerHTML;
     document.getElementById("totalValue").innerHTML = document.getElementById("totalValue")
         .innerHTML.replace("$", "");
     document.getElementById("totalValue").innerHTML = "$" + (Number(document.getElementById("totalValue").innerHTML)
-        + Number(movie["price"]));
+        + Number(movie["price"])).toFixed(2);
+    let body = {"movieID" : divCount.getAttribute("id"),
+        "quantity" : divCount.innerText}
+
+    const headers = await myUserData.buildHeader();
+
+    const movieDetails = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/"
+        +sessionStorage.getItem("username")+"/cart/"+sessionStorage.getItem("userCartId"),headers,body);
 }
-function decrementNbr(divElement,cartId,moviePrice) {
+async function decrementNbr(divElement,cartId,moviePrice) {
     let countDiv = document.getElementsByClassName(cartId)[0];
 
     if(countDiv.innerHTML > 1) {
@@ -171,8 +181,16 @@ function decrementNbr(divElement,cartId,moviePrice) {
         document.getElementById("totalValue").innerHTML = document.getElementById("totalValue")
             .innerHTML.replace("$", "");
         document.getElementById("totalValue").innerHTML = "$" + (Number(document.getElementById("totalValue").innerHTML)
-            - Number(moviePrice));
+            - Number(moviePrice)).toFixed(2);
     }
+
+    let body = {"movieID" : countDiv.getAttribute("id"),
+        "quantity" : countDiv.innerText}
+
+    const headers = await myUserData.buildHeader();
+
+    const movieDetails = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/"
+        +sessionStorage.getItem("username")+"/cart/"+sessionStorage.getItem("userCartId"),headers,body);
 }
 
 buildShoppingCart();
