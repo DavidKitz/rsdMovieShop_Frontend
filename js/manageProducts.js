@@ -100,6 +100,10 @@ async function deleteMovie(movieId) {
         alert("Movie with the id " + movieId + " successfully Deleted!");
         location.reload();
     }
+    if(response.status == 400) {
+        alert("Movie exists in a current Order and cant be deleted!");
+        location.reload();
+    }
 
 }
 async function updateMovie(movieRow) {
