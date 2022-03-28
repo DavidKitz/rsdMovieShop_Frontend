@@ -46,8 +46,6 @@ async function addItemToCart(e) {
     const headers = await myUserData.buildHeader();
     let body = {}
 
-
-
     const movieDetails = await myFetchService.performHttpPutRequestWithBody("http://localhost:8080/api/user/"
         +sessionStorage.getItem("username")+"/cart/"+sessionStorage.getItem("userCartId")+"/movieId/"+
         sessionStorage.getItem("movieDetailsId"),headers,body);
